@@ -61,3 +61,28 @@ def prison_check():
         
         return wrapper
     return decorator
+
+def maintenance_check():
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(self, inter, *args, **kwargs):
+            is_admin = any(role.id in ADMIN_ROLE_IDS for role in inter.author.roles)
+
+            if is_admin:
+                return await func(self, inter, *args, **kwargs)
+
+            is_maintenance = await self.bot.db.get_maintenance()
+
+            if is_maintenance:
+                embed = embed_builder.get_embed(
+                    name="error_maintenance",
+                    icon_url=self.bot.user.display_avatar.url
+                )
+                
+                await inter.send(embed=embed, ephemeral=True)
+                return
+
+            await func(self, inter, *args, **kwargs)
+        
+        return wrapper
+    return decorator

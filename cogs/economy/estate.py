@@ -4,7 +4,7 @@ import asyncio
 from config import SELL_RATIO, ECO_CFG
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -200,6 +200,7 @@ class Estate(commands.Cog):
         return choices[:25]
 
     @estate.sub_command(name="подселить", description="Подселить игрока в дом")
+    @maintenance_check()
     @prison_check()
     async def invite(
         self, 
@@ -267,6 +268,7 @@ class Estate(commands.Cog):
         await inter.channel.send(content=member.mention, embed=embed_invite, view=view)
 
     @estate.sub_command(name="выселить", description="Выселить жильца")
+    @maintenance_check()
     @prison_check()
     async def kick(self, inter, member: disnake.Member = commands.Param(name="пользователь", description="Выберите пользователя")):
         house = await self.bot.db.get_house(inter.author.id)
@@ -287,6 +289,7 @@ class Estate(commands.Cog):
         await inter.send(embed=disnake.Embed(description=f"✅ Вы выселили {member.mention} из дома.", color=disnake.Color.green()))
 
     @estate.sub_command(name="съехать", description="Съехать из дома")
+    @maintenance_check()
     @prison_check()
     async def leave(self, inter):
         tenant_info = await self.bot.db.get_tenant_info(inter.author.id)
@@ -309,6 +312,7 @@ class Estate(commands.Cog):
         await inter.send(embed=embed)
 
     @estate.sub_command(name="жильцы", description="Список жильцов")
+    @maintenance_check()
     @prison_check()
     async def tenants_list(self, inter):
         house = await self.bot.db.get_house(inter.author.id)
@@ -338,6 +342,7 @@ class Estate(commands.Cog):
         await inter.send(embed=embed)
 
     @estate.sub_command(name="инфо", description="Показать информацию о доме")
+    @maintenance_check()
     @prison_check()
     async def info(
         self, 
@@ -420,6 +425,7 @@ class Estate(commands.Cog):
         await inter.send(embed=embed)
 
     @estate.sub_command(name="купить", description="Купить новый дом")
+    @maintenance_check()
     @prison_check()
     async def buy(
         self, 
@@ -495,6 +501,7 @@ class Estate(commands.Cog):
         await inter.send(embed=embed)
 
     @estate.sub_command(name="продать", description="Продать текущий дом за часть стоимости")
+    @maintenance_check()
     @prison_check()
     async def sell(self, inter):
         house = await self.bot.db.get_house(inter.author.id)

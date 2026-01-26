@@ -7,7 +7,7 @@ import asyncio
 from config import ECO_CFG
 from disnake.ext import commands, tasks
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -77,11 +77,13 @@ class FinanceSystem(commands.Cog):
         return embed, view
 
     @commands.slash_command(name="финансы", description="Банковская система")
+    @maintenance_check()
     @prison_check()
     async def finance(self, inter):
         pass
 
     @finance.sub_command(name="вклад", description="Управление вкладами")
+    @maintenance_check()
     @prison_check()
     async def deposit(
         self, 
@@ -161,6 +163,7 @@ class FinanceSystem(commands.Cog):
         await inter.send(embed=embed)
 
     @finance.sub_command(name="кредит", description="Меню кредитования")
+    @maintenance_check()
     @prison_check()
     async def credit_menu_cmd(self, inter):
         embed, view = await self.render_credit_menu(inter.author)

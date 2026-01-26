@@ -5,7 +5,7 @@ import asyncio
 from config import ECO_CFG
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -176,11 +176,13 @@ class Casino(commands.Cog):
         return True
 
     @commands.slash_command(name="казино", description="Играть в азартные игры")
+    @maintenance_check()
     @prison_check()
     async def casino(self, inter):
         pass
 
     @casino.sub_command(name="слоты", description="Крутить барабан")
+    @maintenance_check()
     @prison_check()
     async def slots(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
         if not await self.check_balance(inter, bet): return
@@ -233,6 +235,7 @@ class Casino(commands.Cog):
         await inter.edit_original_message(content=None, embed=embed)
 
     @casino.sub_command(name="кости", description="Бросить кубики")
+    @maintenance_check()
     @prison_check()
     async def dice(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
         if not await self.check_balance(inter, bet): return
@@ -259,6 +262,7 @@ class Casino(commands.Cog):
         await inter.send(embed=embed)
 
     @casino.sub_command(name="блэкджек", description="Карточная игра 21")
+    @maintenance_check()
     @prison_check()
     async def blackjack(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
         if not await self.check_balance(inter, bet): return

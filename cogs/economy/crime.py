@@ -3,7 +3,7 @@ import random
 
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -26,6 +26,7 @@ class Crime(commands.Cog):
         return False
 
     @commands.slash_command(name="ограбить", description="Попытаться ограбить пользователя")
+    @maintenance_check()
     @prison_check()
     async def crime(
         self, 

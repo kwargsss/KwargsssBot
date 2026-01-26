@@ -203,6 +203,13 @@ class UsersDataBase:
             )
         """)
 
+        await self.conn.execute("""
+            CREATE TABLE IF NOT EXISTS settings (
+                key TEXT PRIMARY KEY,
+                value INTEGER
+            )
+        """)
+
         await self.conn.commit()
 
     async def get_all_users_raw(self):
@@ -703,3 +710,36 @@ class UsersDataBase:
 
     async def delete_family_business(self, biz_id: int):
         await self.execute("DELETE FROM marriages_businesses WHERE id = ?", (biz_id,))
+
+    async def get_global_economy_data(self):
+        async with self.conn.execute("SELECT money, bank FROM users") as cursor:
+            users_data = await cursor.fetchall()
+
+        biz_data = []
+        try:
+            async with self.conn.execute("SELECT type FROM businesses") as cursor:
+                biz_data.extend(await cursor.fetchall())
+        except Exception: pass
+            
+        try:
+            async with self.conn.execute("SELECT type FROM marriages_businesses") as cursor:
+                biz_data.extend(await cursor.fetchall())
+        except Exception: pass
+
+        family_data = []
+        
+        async with self.conn.execute("SELECT balance FROM marriages") as cursor:
+            family_data = await cursor.fetchall()
+            
+        return users_data, biz_data, family_data
+    
+    async def set_maintenance(self, state: bool):
+        val = 1 if state else 0
+        await self.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('maintenance', ?)", (val,))
+
+    async def get_maintenance(self):
+        async with self.conn.execute("SELECT value FROM settings WHERE key = 'maintenance'") as cursor:
+            row = await cursor.fetchone()
+            if row:
+                return row[0] == 1
+            return False

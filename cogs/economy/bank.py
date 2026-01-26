@@ -1,6 +1,6 @@
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 from utils.commission import commission_manager
 
 
@@ -11,11 +11,13 @@ class BankSystem(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="банк", description="Снять или положить деньги")
+    @maintenance_check()
     @prison_check()
     async def bank(self, inter):
         pass
 
     @bank.sub_command(name="положить", description="Положить деньги в банк")
+    @maintenance_check()
     @prison_check()
     async def deposit(
         self, 
@@ -55,6 +57,7 @@ class BankSystem(commands.Cog):
         await inter.send(embed=embed)
 
     @bank.sub_command(name="снять", description="Снять деньги с банка")
+    @maintenance_check()
     async def withdraw(
         self, 
         inter, 

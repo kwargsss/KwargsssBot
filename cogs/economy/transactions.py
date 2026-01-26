@@ -1,6 +1,6 @@
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -11,6 +11,7 @@ class Transactions(commands.Cog):
 
     @commands.slash_command(name="транзакции", description="История ваших переводов")
     @prison_check()
+    @maintenance_check()
     async def transactions(self, inter):
         await inter.response.defer()
 

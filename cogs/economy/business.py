@@ -5,7 +5,7 @@ import random
 from config import SELL_RATIO, ECONOMY_NEWS_CHANNEL_ID, MAX_UPGRADE_LEVEL, ECO_CFG
 from disnake.ext import commands, tasks
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 from utils.commission import commission_manager
 
 
@@ -503,6 +503,7 @@ class Business(commands.Cog):
             await asyncio.sleep(1)
 
     @commands.slash_command(name="бизнес", description="Управление бизнесом")
+    @maintenance_check()
     @prison_check()
     async def business(self, inter):
         pass
@@ -522,6 +523,7 @@ class Business(commands.Cog):
         return choices[:25]
 
     @business.sub_command(name="инфо", description="Панель управления бизнесом")
+    @maintenance_check()
     @prison_check()
     async def biz_info(self, inter):
         embed, view = await render_dashboard(self.bot, inter.author)
@@ -537,6 +539,7 @@ class Business(commands.Cog):
         await inter.send(embed=embed, view=view)
 
     @business.sub_command(name="купить", description="Купить новый бизнес")
+    @maintenance_check()
     @prison_check()
     async def buy(
         self, 
@@ -613,6 +616,7 @@ class Business(commands.Cog):
         await inter.send(embed=embed)
 
     @business.sub_command(name="продать", description="Продать один из своих бизнесов")
+    @maintenance_check()
     @prison_check()
     async def biz_sell(self, inter):
         businesses = await self.bot.db.get_user_businesses(inter.author.id)

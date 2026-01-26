@@ -3,6 +3,7 @@ import disnake
 from disnake.ext import commands
 from config import *
 from utils.embeds import EmbedBuilder
+from utils.decorators import maintenance_check, prison_check
 
 
 embed_builder = EmbedBuilder()
@@ -132,10 +133,14 @@ class CustomRoles(commands.Cog):
         self.role_price = ECO_CFG["global"].get("custom_role_price", 1000000)
 
     @commands.slash_command(name="роль", description="Управление личными ролями")
+    @prison_check()
+    @maintenance_check()
     async def role(self, inter):
         pass
 
     @role.sub_command(name="купить", description="Купить личную роль")
+    @prison_check()
+    @maintenance_check()
     async def buy(
         self, 
         inter, 

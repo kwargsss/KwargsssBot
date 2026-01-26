@@ -1,5 +1,6 @@
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
+from utils.decorators import maintenance_check
 
 
 embed_builder = EmbedBuilder()
@@ -9,6 +10,7 @@ class Bio(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="био", description="Установить биографию профиля")
+    @maintenance_check()
     async def bio(
         self, 
         inter, 

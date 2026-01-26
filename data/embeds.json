@@ -1016,5 +1016,55 @@
 		"color": "00FF00",
 		"timestamp": true,
 		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+	},
+
+	"admin_economy_report": {
+		"title": "📊 Экономическая Аналитика",
+		"description": "Глобальный срез финансового состояния сервера на {date}.",
+		"color": "2b2d31",
+		"fields": [
+			{
+				"name": "💰 Денежная Масса (M1)",
+				"value": "{m1_stats}",
+				"inline": false
+			},
+			{
+				"name": "⚖️ Социальное Неравенство",
+				"value": "{inequality_stats}",
+				"inline": false
+			},
+			{
+				"name": "🏗️ Скрытая Ликвидность (Активы)",
+				"value": "{assets_stats}",
+				"inline": true
+			}
+		],
+		"footer": {
+			"text": "Совет системы: {recommendation}",
+			"icon_url": "{icon_url}"
+		},
+		"timestamp": true
+	},
+
+	"error_maintenance": {
+		"title": "🚧 Технические Работы",
+		"description": "В данный момент проводятся обновления.\nЭкономика временно недоступна во избежание ошибок.",
+		"color": "FFA500",
+		"timestamp": true,
+		"footer": { "text": "System Bot", "icon_url": "{icon_url}" }
+	},
+	"maintenance_enabled": {
+		"title": "🚧 Режим Техработ ВКЛЮЧЕН",
+		"description": ">>> **Все экономические команды заблокированы для игроков.**\nАдминистраторы могут продолжать использовать бота.",
+		"color": "FFA500",
+		"timestamp": true,
+		"footer": { "text": "System Maintenance", "icon_url": "{author_avatar}" }
+	},
+	"maintenance_disabled": {
+		"title": "✅ Режим Техработ ВЫКЛЮЧЕН",
+		"description": ">>> Бот снова доступен для всех игроков.",
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "System Maintenance", "icon_url": "{author_avatar}" }
 	}
 }

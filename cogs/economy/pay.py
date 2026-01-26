@@ -3,7 +3,7 @@ import config
 
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check
+from utils.decorators import prison_check, maintenance_check
 from utils.commission import commission_manager
 
 
@@ -15,6 +15,7 @@ class PaySystem(commands.Cog):
 
     @commands.slash_command(name="передать", description="Перевести деньги другому пользователю")
     @prison_check()
+    @maintenance_check()
     async def pay(
         self, 
         inter, 

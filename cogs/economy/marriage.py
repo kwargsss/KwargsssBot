@@ -6,7 +6,7 @@ from config import *
 from config import WEDDING_PRICE, ECO_CFG
 from disnake.ext import commands, tasks
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import custom_cooldown
+from utils.decorators import custom_cooldown, maintenance_check, prison_check
 from utils.commission import commission_manager 
 
 
@@ -419,10 +419,14 @@ class Marriage(commands.Cog):
         self.fam_biz_loop.cancel()
 
     @commands.slash_command(name="семья", description="Семейные команды")
+    @prison_check()
+    @maintenance_check()
     async def family(self, inter):
         pass
 
     @family.sub_command(name="свадьба", description=f"Предложить руку и сердце (Цена: {WEDDING_PRICE})")
+    @prison_check()
+    @maintenance_check()
     async def marry(
         self, 
         inter, 
@@ -473,6 +477,8 @@ class Marriage(commands.Cog):
         await inter.response.send_message(content=member.mention, embed=embed, view=view)
 
     @family.sub_command(name="развод", description="Расторгнуть брак")
+    @prison_check()
+    @maintenance_check()
     async def divorce(self, inter):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
@@ -509,6 +515,8 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed)
 
     @family.sub_command(name="профиль", description="Посмотреть профиль семьи")
+    @prison_check()
+    @maintenance_check()
     async def profile(self, inter):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
@@ -545,6 +553,8 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed)
 
     @family.sub_command(name="улучшения", description="Магазин улучшений семьи")
+    @prison_check()
+    @maintenance_check()
     async def improvements(self, inter):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage: 
@@ -560,6 +570,8 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed, view=view)
 
     @family.sub_command(name="пополнить", description="Пополнить семейный бюджет")
+    @prison_check()
+    @maintenance_check()
     async def deposit(
         self, 
         inter, 
@@ -594,6 +606,8 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed)
 
     @family.sub_command(name="снять", description="Снять деньги из семейного бюджета")
+    @prison_check()
+    @maintenance_check()
     async def withdraw(
         self, 
         inter, 
@@ -630,10 +644,14 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed)
 
     @family.sub_command_group(name="бизнес", description="Управление семейным бизнесом")
+    @prison_check()
+    @maintenance_check()
     async def family_biz(self, inter):
         pass
 
     @family_biz.sub_command(name="продать", description="Продать семейный бизнес")
+    @prison_check()
+    @maintenance_check()
     async def fb_sell(self, inter):
         await inter.response.defer(ephemeral=True)
 
@@ -678,6 +696,8 @@ class Marriage(commands.Cog):
         await inter.edit_original_response(embed=embed, view=view)
 
     @family_biz.sub_command(name="купить", description="Купить семейный бизнес")
+    @prison_check()
+    @maintenance_check()
     async def fb_buy(self, inter, biz_type: str = commands.Param(name="тип", description="Выберите бизнес", choices={"🍷 Винодельня": "family_winery", "🏨 Отель": "family_hotel"})):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage: 
@@ -721,10 +741,14 @@ class Marriage(commands.Cog):
         await inter.send(embed=embed)
 
     @family_biz.sub_command(name="инфо", description="Управление семейными бизнесами")
+    @prison_check()
+    @maintenance_check()
     async def fb_info(self, inter):
         await render_family_biz_dashboard(self.bot, inter)
 
     @family.sub_command(name="любовь", description="Отправить любовь партнеру")
+    @prison_check()
+    @maintenance_check()
     @custom_cooldown("love")
     async def love(self, inter):
         marriage = await self.bot.db.get_marriage(inter.author.id)

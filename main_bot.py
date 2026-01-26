@@ -174,10 +174,5 @@ for filename in os.listdir("./cogs/economy"):
     if filename.endswith(".py") and not filename.startswith("_"):
         bot.load_extension(f"cogs.economy.{filename[:-3]}")
 
-for filename in os.listdir("./cogs/social"):
-    if filename.endswith(".py") and not filename.startswith("_"):
-        bot.load_extension(f"cogs.social.{filename[:-3]}")
-
-
 if __name__ == "__main__":
     bot.run(BOT_TOKEN)

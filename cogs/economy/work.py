@@ -1,7 +1,7 @@
 import random
 
 from config import ECO_CFG
-from utils.decorators import custom_cooldown, prison_check
+from utils.decorators import custom_cooldown, prison_check, maintenance_check
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder, format_money
 
@@ -16,6 +16,7 @@ class Work(commands.Cog):
 
     @commands.slash_command(name="работа", description="Поработать и получить деньги и опыт")
     @prison_check()
+    @maintenance_check()
     @custom_cooldown("work")
     async def work(self, inter):
         remaining = await self.bot.db.get_remaining_cooldown(inter.author.id, "work")
