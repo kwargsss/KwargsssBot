@@ -927,5 +927,94 @@
 		"color": "00FF00",
 		"timestamp": true,
 		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+	},
+
+	"family_improvements_list": {
+		"title": "🏡 Улучшения семьи",
+		"description": "Уровень вашей семьи: **{level}**\nБюджет семьи: **{balance}**\n\nВыберите улучшение для покупки:",
+		"color": "0000FF",
+		"footer": { "text": "Social System", "icon_url": "{author_avatar}" },
+		"timetamp": true
+	},
+	"family_improvement_success": {
+		"title": "✅ Улучшение куплено",
+		"description": "Вы успешно приобрели улучшение **{imp_name}**!",
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+	},
+	"family_biz_dashboard": {
+		"title": "🏩 Семейный бизнес: {biz_name}",
+		"description": "**Владельцы:** {owners}",
+		"fields": [
+			{ "name": "💰 Касса", "value": "`{balance}`", "inline": true },
+			{
+				"name": "📦 Склад",
+				"value": "`{supplies}/{max_storage}`\n{storage_progress}",
+				"inline": true
+			},
+			{ "name": "📊 Статус", "value": "{status}", "inline": true },
+			{ "name": "🛠️ Улучшения", "value": "{upgrades}", "inline": false }
+		],
+		"color": "0000FF",
+		"timestamp": true,
+		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+	},
+	"family_biz_withdraw": {
+		"title": "💰 Прибыль снята",
+		"timestamp": true,
+		"description": "Вы сняли **{amount}** в семейный бюджет.",
+		"color": "00FF00",
+		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+	},
+	"family_biz_buy_success": {
+		"title": "🤝 Бизнес приобретен",
+		"description": "Ваша семья купила **{biz_name}**!",
+		"fields": [{ "name": "Цена", "value": "`{price}`", "inline": true }],
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+	},
+	"error_no_family_improvement": {
+		"title": "❌ Нет улучшения",
+		"description": "Для этого действия требуется улучшение **{imp_name}**.\nИспользуйте `/семья улучшения` для покупки.",
+		"color": "FF0000",
+		"footer": { "text": "Social System", "icon_url": "{author_avatar}" },
+		"timestamp": true
+	},
+	"error_family_biz_duplicate": {
+		"title": "❌ Ошибка покупки",
+		"description": "У вашей семьи уже есть бизнес **{biz_name}**.",
+		"color": "FF0000",
+		"timestamp": true,
+		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+	},
+
+	"family_biz_sell_select": {
+		"title": "💸 Продажа семейных активов",
+		"timestamp": true,
+		"description": "Выберите бизнес для продажи.\n⚠️ Семья получит **50%** от гос. стоимости на семейный счет.",
+		"color": "0000FF",
+		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+	},
+	"family_biz_sell_confirm": {
+		"title": "⚠️ Продажа бизнеса",
+		"timestamp": true,
+		"description": "Вы уверены, что хотите продать **{biz_name}**?",
+		"fields": [
+			{ "name": "💰 Выплата в бюджет", "value": "`{amount}`", "inline": true }
+		],
+		"color": "FF0000",
+		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+	},
+	"family_biz_sell_success": {
+		"title": "✅ Бизнес продан",
+		"description": "Вы продали **{biz_name}**.",
+		"fields": [
+			{ "name": "➕ В бюджет семьи", "value": "`{amount}`", "inline": true }
+		],
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
 	}
 }

@@ -111,7 +111,23 @@ class UsersDataBase:
                 balance INTEGER DEFAULT 0,
                 level INTEGER DEFAULT 1,
                 love_xp INTEGER DEFAULT 0,
-                last_love REAL DEFAULT 0
+                last_love REAL DEFAULT 0,
+                improvements TEXT DEFAULT ''                                
+            )
+        """)
+
+        await self.conn.execute("""
+            CREATE TABLE IF NOT EXISTS marriages_businesses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                marriage_id INTEGER,
+                type TEXT,
+                balance INTEGER DEFAULT 0,
+                supplies INTEGER DEFAULT 0,
+                marketing_lvl INTEGER DEFAULT 0,
+                logistics_lvl INTEGER DEFAULT 0,
+                security_lvl INTEGER DEFAULT 0,
+                automation_lvl INTEGER DEFAULT 0,
+                offshore_lvl INTEGER DEFAULT 0
             )
         """)
 
@@ -650,3 +666,40 @@ class UsersDataBase:
                 return owner_house, 'tenant'
         
         return None, None,
+
+    async def add_family_improvement(self, marriage_id: int, improvement: str):
+        async with self.conn.execute("SELECT improvements FROM marriages WHERE id = ?", (marriage_id,)) as cursor:
+            row = await cursor.fetchone()
+            current = row[0] if row and row[0] else ""
+        
+        if current:
+            new_imps = current + "," + improvement
+        else:
+            new_imps = improvement
+            
+        await self.execute("UPDATE marriages SET improvements = ? WHERE id = ?", (new_imps, marriage_id))
+
+    async def get_family_businesses(self, marriage_id: int):
+        async with self.conn.execute("SELECT * FROM marriages_businesses WHERE marriage_id = ?", (marriage_id,)) as cursor:
+            rows = await cursor.fetchall()
+            return [dict(row) for row in rows]
+
+    async def create_family_business(self, marriage_id: int, biz_type: str):
+        await self.execute("INSERT INTO marriages_businesses (marriage_id, type) VALUES (?, ?)", (marriage_id, biz_type))
+
+    async def get_family_business(self, biz_id: int):
+        async with self.conn.execute("SELECT * FROM marriages_businesses WHERE id = ?", (biz_id,)) as cursor:
+            row = await cursor.fetchone()
+            return dict(row) if row else None
+
+    async def update_family_biz_stats(self, biz_id: int, supplies: int, balance: int):
+        await self.execute(
+            "UPDATE marriages_businesses SET supplies = MAX(0, supplies + ?), balance = MAX(0, balance + ?) WHERE id = ?",
+            (supplies, balance, biz_id)
+        )
+    
+    async def upgrade_family_biz(self, biz_id: int, upgrade_type: str):
+        await self.execute(f"UPDATE marriages_businesses SET {upgrade_type} = {upgrade_type} + 1 WHERE id = ?", (biz_id,))
+
+    async def delete_family_business(self, biz_id: int):
+        await self.execute("DELETE FROM marriages_businesses WHERE id = ?", (biz_id,))

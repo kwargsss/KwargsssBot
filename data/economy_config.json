@@ -812,5 +812,40 @@
 				"next_tier": null
 			}
 		}
+	},
+
+	"family": {
+		"improvements": {
+			"family_business": {
+				"name": "Семейный бизнес",
+				"description": "Позволяет покупать и управлять семейными предприятиями.",
+				"price": 10000000,
+				"level_req": 30
+			},
+			"family_capital": {
+				"name": "Семейный капитал",
+				"description": "Бонус к вкладам (x1.2) и скидка 10% на покупку имущества.",
+				"price": 5000000,
+				"level_req": 20,
+				"deposit_multiplier": 1.5,
+				"discount_percent": 10
+			}
+		},
+		"businesses": {
+			"family_winery": {
+				"name": "Винодельня",
+				"cost": 5000000,
+				"income": 15000,
+				"consume": 50,
+				"storage": 1000
+			},
+			"family_hotel": {
+				"name": "Семейный отель",
+				"cost": 15000000,
+				"income": 40000,
+				"consume": 150,
+				"storage": 3000
+			}
+		}
 	}
 }

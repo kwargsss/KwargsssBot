@@ -135,9 +135,17 @@ class FinanceSystem(commands.Cog):
                 ephemeral=True
             )
 
-        percent = self.config["deposits"].get(days, 5)
-        profit = int(amount * (percent / 100))
+        percent = self.config.get("deposits", {}).get(days, 5)
         
+        marriage = await self.bot.db.get_marriage(inter.author.id)
+        if marriage and "family_capital" in (marriage.get('improvements') or ""):
+            fam_cfg = ECO_CFG.get('family', {}).get('improvements', {}).get('family_capital', {})
+            bonus_mult = fam_cfg.get('deposit_multiplier', 1.0)
+            
+            percent = int(percent * bonus_mult)
+
+        profit = int(amount * (percent / 100))
+
         await self.bot.db.update_money(inter.author, -amount, 0)
         await self.bot.db.create_deposit(inter.author.id, amount, profit, int(days))
 

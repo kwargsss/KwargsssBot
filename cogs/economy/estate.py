@@ -462,7 +462,12 @@ class Estate(commands.Cog):
 
         conf = houses[selected_key]
         price = conf["price"]
-        
+
+        marriage = await self.bot.db.get_marriage(inter.author.id)
+        if marriage and "family_capital" in (marriage.get('improvements') or ""):
+             discount_pct = ECO_CFG.get('family', {}).get('improvements', {}).get('family_capital', {}).get('discount_percent', 0)
+             price = int(price * (1 - (discount_pct / 100)))
+
         user_db = await self.bot.db.get_user(inter.author)
         if user_db["money"] < price:
             return await inter.send(

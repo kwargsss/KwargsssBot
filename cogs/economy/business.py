@@ -587,6 +587,12 @@ class Business(commands.Cog):
         info = CFG.types[selected_key]
         cost = info['cost']
 
+        marriage = await self.bot.db.get_marriage(inter.author.id)
+        if marriage and "family_capital" in (marriage.get('improvements') or ""):
+             fam_cfg = ECO_CFG.get('family', {}).get('improvements', {}).get('family_capital', {})
+             discount_pct = fam_cfg.get('discount_percent', 0)
+             cost = int(cost * (1 - (discount_pct / 100)))
+
         user_db = await self.bot.db.get_user(inter.author)
         if user_db['money'] < cost:
             return await inter.send(
