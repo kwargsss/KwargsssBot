@@ -1,1027 +1,1133 @@
 {
 	"_comments": {
-		"colors": {
-			"admin": "FF0000",
-			"economy": "00FF00",
-			"social": "0000FF",
-			"log": "808080",
-			"error": "FF0000"
+		"style_guide": {
+			"success": "2ECC71",
+			"error": "ED4245",
+			"warning": "FEE75C",
+			"info": "5865F2",
+			"economy": "F1C40F",
+			"social": "EB459E",
+			"log": "2B2D31",
+			"admin": "202225"
 		}
 	},
 
 	"error_generic": {
-		"title": "❌ Ошибка",
-		"description": "{text}",
-		"color": "FF0000",
+		"title": "🚫 | Возникла ошибка",
+		"description": "> {text}",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Система безопасности", "icon_url": "{author_avatar}" }
 	},
 	"error_interaction_owner": {
-		"title": "❌ Доступ запрещен",
-		"description": "Вы не можете управлять этим меню или кнопкой.",
-		"color": "FF0000",
+		"title": "🚷 | Доступ запрещен",
+		"description": "Элементы управления этим меню предназначены для другого пользователя.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Система безопасности", "icon_url": "{author_avatar}" }
 	},
 	"error_cooldown": {
-		"title": "⏳ Подождите",
-		"description": "Команда доступна через **{time}**.",
-		"color": "FF0000",
+		"title": "⏳ | Не так быстро",
+		"description": "Команда перезаряжается. Попробуйте снова через:\n# ⏱️ {time}",
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "" }
+		"footer": { "text": "Лимит действий", "icon_url": "" }
 	},
 	"error_no_permission": {
-		"title": "❌ Нет прав",
-		"description": "У вас недостаточно прав для этого действия.",
-		"color": "FF0000",
+		"title": "⛔ | Недостаточно прав",
+		"description": "У вас нет необходимых прав доступа для выполнения этой команды.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Администратор", "icon_url": "{author_avatar}" }
 	},
 	"error_hierarchy": {
-		"title": "❌ Ошибка иерархии",
-		"description": "Вы не можете применить это действие к пользователю с ролью выше или равной вашей.",
-		"color": "FF0000",
+		"title": "🛡️ | Ошибка иерархии",
+		"description": "Невозможно применить действие к пользователю с равной или более высокой ролью.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Администратор", "icon_url": "{author_avatar}" }
 	},
 	"error_self_action": {
-		"title": "❌ Недопустимое действие",
-		"description": "Вы не можете применить это к самому себе.",
-		"color": "FF0000",
+		"title": "👤 | Ошибка цели",
+		"description": "Вы не можете применить это действие к самому себе.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Система", "icon_url": "{author_avatar}" }
 	},
 	"error_bot_action": {
-		"title": "❌ Недопустимое действие",
-		"description": "Это действие нельзя применить к ботам.",
-		"color": "FF0000",
+		"title": "🤖 | Ошибка цели",
+		"description": "Взаимодействие с ботами запрещено.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Система", "icon_url": "{author_avatar}" }
 	},
 	"error_invalid_time": {
-		"title": "❌ Неверный формат времени",
-		"description": "Укажите число и единицу измерения (10м, 1ч, 2д).\nМинимальное время: 5 секунд.",
-		"color": "FF0000",
+		"title": "🕐 | Неверный формат",
+		"description": "Укажите корректное время (минимум 5 сек).\n**Примеры:** `10м`, `1ч`, `2д`.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Система", "icon_url": "{author_avatar}" }
 	},
 	"error_admin_channel": {
-		"title": "❌ Защищенный канал",
-		"description": "Этот канал является административным и не может быть изменен.",
-		"color": "FF0000",
+		"title": "🔒 | Защищенный канал",
+		"description": "Настройки этого канала заблокированы администратором.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Администратор", "icon_url": "{author_avatar}" }
 	},
 	"error_zero_amount": {
-		"title": "❌ Ошибка ввода",
-		"description": "Сумма должна быть больше нуля.",
-		"color": "FF0000",
+		"title": "🔢 | Ошибка ввода",
+		"description": "Сумма операции должна быть строго больше нуля.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Финансы", "icon_url": "{author_avatar}" }
 	},
 	"error_no_money": {
-		"title": "❌ Недостаточно средств",
-		"description": "У вас не хватает денег для этой операции.",
-		"color": "FF0000",
+		"title": "💸 | Нехватка средств",
+		"description": "На вашем счету недостаточно средств.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Финансы", "icon_url": "{author_avatar}" }
 	},
 	"error_no_money_details": {
-		"title": "❌ Недостаточно средств",
-		"description": "💳 Баланс: **{balance}**\n💸 Требуется: **{needed}**",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
-	},
-	"error_not_found": {
-		"title": "❌ Не найдено",
-		"description": "Объект не найден в базе данных.",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
-	},
-	"error_house_full": {
-		"title": "❌ Нет мест",
-		"description": "В доме типа **{house_type}** достигнут лимит жильцов (Макс: **{limit}**).",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
-	},
-
-	"success_ban": {
-		"title": "🔨 Пользователь заблокирован",
+		"title": "💸 | Нехватка средств",
+		"description": "Операция отклонена банком.",
 		"fields": [
-			{ "name": "👤 Нарушитель", "value": "{user_mention}", "inline": true },
-			{ "name": "🛡️ Модератор", "value": "{moderator_name}", "inline": true },
-			{ "name": "⏳ Срок", "value": "`{time_str}`", "inline": true },
-			{ "name": "📅 Истекает", "value": "<t:{expires_at}:R>", "inline": true },
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
-	},
-	"log_ban": {
-		"title": "🛑 Лог: Бан",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
 			{
-				"name": "🛡️ Модератор",
-				"value": "{moderator_mention}",
-				"inline": true
-			},
-			{ "name": "⏳ Срок", "value": "`{time_str}`", "inline": true },
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
-	},
-	"success_unban": {
-		"title": "🔓 Разбан",
-		"description": "С пользователя {user_mention} снята блокировка.",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
-	},
-	"log_unban": {
-		"title": "🔓 Лог: Разбан",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{ "name": "🛡️ Модератор", "value": "{moderator_mention}", "inline": true }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
-	},
-	"success_mute": {
-		"title": "🔇 Мьют",
-		"description": "Пользователю ограничен доступ к чату.",
-		"fields": [
-			{ "name": "👤 Нарушитель", "value": "{user_mention}", "inline": true },
-			{ "name": "⏳ Срок", "value": "`{time_str}`", "inline": true },
-			{ "name": "📅 Снятие", "value": "<t:{expires_at}:R>", "inline": true },
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
-	},
-	"log_mute": {
-		"title": "🔇 Лог: Мьют",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{
-				"name": "🛡️ Модератор",
-				"value": "{moderator_mention}",
-				"inline": true
-			},
-			{ "name": "⏳ Срок", "value": "`{time_str}`", "inline": true },
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
-	},
-	"success_unmute": {
-		"title": "🔊 Мьют снят",
-		"description": "Пользователь {user_mention} снова может говорить.",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
-	},
-	"log_unmute": {
-		"title": "🔊 Лог: Снятие мьюта",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{ "name": "🛡️ Модератор", "value": "{moderator_mention}", "inline": true }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
-	},
-	"success_warn": {
-		"title": "⚠️ Предупреждение",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{ "name": "🔢 Варн №", "value": "**{warn_count}**", "inline": true },
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
-	},
-	"log_warn": {
-		"title": "⚠️ Лог: Варн",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{
-				"name": "🛡️ Модератор",
-				"value": "{moderator_mention}",
+				"name": "💳 Ваш баланс",
+				"value": "```cs\n{balance} $\n```",
 				"inline": true
 			},
 			{
-				"name": "🔢 Всего варнов",
-				"value": "**{warn_count}**",
-				"inline": true
-			},
-			{ "name": "📝 Причина", "value": "```\n{reason}\n```", "inline": false }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
-	},
-	"success_unwarn": {
-		"title": "🛡️ Предупреждение снято",
-		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{
-				"name": "🛡️ Модератор",
-				"value": "{moderator_mention}",
-				"inline": true
-			},
-			{
-				"name": "🔢 Осталось варнов",
-				"value": "**{warn_count}**",
+				"name": "📉 Требуется",
+				"value": "```cs\n{needed} $\n```",
 				"inline": true
 			}
 		],
-		"color": "FF0000",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{moderator_avatar}" }
+		"footer": { "text": "Финансы", "icon_url": "{author_avatar}" }
+	},
+	"error_not_found": {
+		"title": "🔍 | Не найдено",
+		"description": "Запрашиваемый объект отсутствует в базе данных.",
+		"color": "ED4245",
+		"timestamp": true,
+		"footer": { "text": "База данных", "icon_url": "{author_avatar}" }
+	},
+	"error_house_full": {
+		"title": "🏠 | Дом переполнен",
+		"description": "В недвижимости **{house_type}** нет свободных комнат.",
+		"fields": [
+			{ "name": "👥 Лимит жильцов", "value": "`{limit}` чел.", "inline": true }
+		],
+		"color": "ED4245",
+		"timestamp": true,
+		"footer": { "text": "Недвижимость", "icon_url": "{author_avatar}" }
+	},
+
+	"success_ban": {
+		"title": "🔨 | Правосудие свершилось",
+		"description": "Пользователь был заблокирован на сервере.",
+		"fields": [
+			{ "name": "👤 Нарушитель", "value": "{user_mention}", "inline": true },
+			{
+				"name": "🛡️ Администратор",
+				"value": "**{moderator_name}**",
+				"inline": true
+			},
+			{ "name": "⏱️ Срок", "value": "`{time_str}`", "inline": true },
+			{
+				"name": "📅 Разбан",
+				"value": "<t:{expires_at}:f> (<t:{expires_at}:R>)",
+				"inline": false
+			},
+			{ "name": "📄 Причина", "value": ">>> {reason}", "inline": false }
+		],
+		"color": "ED4245",
+		"timestamp": true,
+		"footer": { "text": "Бан-хаммер", "icon_url": "{moderator_avatar}" }
+	},
+	"log_ban": {
+		"title": "🔴 Лог: Блокировка (Ban)",
+		"fields": [
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true },
+			{ "name": "Длительность", "value": "`{time_str}`", "inline": true },
+			{ "name": "Причина", "value": "```\n{reason}\n```", "inline": false }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
+	},
+	"success_unban": {
+		"title": "🔓 | Амнистия",
+		"description": "С пользователя {user_mention} были сняты все ограничения.",
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Администратор", "icon_url": "{moderator_avatar}" }
+	},
+	"log_unban": {
+		"title": "🟢 Лог: Разблокировка (Unban)",
+		"fields": [
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
+	},
+	"success_mute": {
+		"title": "🔇 | Режим тишины",
+		"description": "Пользователь временно лишен права голоса.",
+		"fields": [
+			{ "name": "👤 Нарушитель", "value": "{user_mention}", "inline": true },
+			{ "name": "⏱️ Длительность", "value": "`{time_str}`", "inline": true },
+			{
+				"name": "🔊 Возврат голоса",
+				"value": "<t:{expires_at}:R>",
+				"inline": true
+			},
+			{ "name": "📄 Причина", "value": ">>> {reason}", "inline": false }
+		],
+		"color": "FEE75C",
+		"timestamp": true,
+		"footer": { "text": "Mute System", "icon_url": "{moderator_avatar}" }
+	},
+	"log_mute": {
+		"title": "🟠 Лог: Мут (Mute)",
+		"fields": [
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true },
+			{ "name": "Срок", "value": "`{time_str}`", "inline": true },
+			{ "name": "Причина", "value": "```\n{reason}\n```", "inline": false }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
+	},
+	"success_unmute": {
+		"title": "🔊 | Голос возвращен",
+		"description": "Пользователь {user_mention} снова может общаться в чате.",
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Mute System", "icon_url": "{moderator_avatar}" }
+	},
+	"log_unmute": {
+		"title": "🔊 Лог: Снятие мута",
+		"fields": [
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
+	},
+	"success_warn": {
+		"title": "⚠️ | Выдано предупреждение",
+		"fields": [
+			{ "name": "👤 Нарушитель", "value": "{user_mention}", "inline": true },
+			{ "name": "📈 Всего варнов", "value": "`{warn_count}`", "inline": true },
+			{ "name": "📄 Причина", "value": ">>> {reason}", "inline": false }
+		],
+		"color": "FEE75C",
+		"timestamp": true,
+		"footer": { "text": "Warn System", "icon_url": "{moderator_avatar}" }
+	},
+	"log_warn": {
+		"title": "⚠️ Лог: Варн (Warn)",
+		"fields": [
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true },
+			{ "name": "Счетчик варнов", "value": "**{warn_count}**", "inline": true },
+			{ "name": "Причина", "value": "```\n{reason}\n```", "inline": false }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
+	},
+	"success_unwarn": {
+		"title": "🛡️ | Предупреждение снято",
+		"fields": [
+			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
+			{
+				"name": "🛡️ Модератор",
+				"value": "{moderator_mention}",
+				"inline": true
+			},
+			{ "name": "📉 Активные варны", "value": "`{warn_count}`", "inline": true }
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Warn System", "icon_url": "{moderator_avatar}" }
 	},
 	"log_unwarn": {
 		"title": "🛡️ Лог: Снятие варна",
 		"fields": [
-			{ "name": "👤 Пользователь", "value": "{user_mention}", "inline": true },
-			{
-				"name": "🛡️ Модератор",
-				"value": "{moderator_mention}",
-				"inline": true
-			},
-			{ "name": "🔢 Осталось", "value": "**{warn_count}**", "inline": true }
+			{ "name": "Пользователь", "value": "{user_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true },
+			{ "name": "Остаток варнов", "value": "**{warn_count}**", "inline": true }
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{moderator_avatar}" }
+		"footer": { "text": "Admin Logger", "icon_url": "{moderator_avatar}" }
 	},
 	"success_lock": {
-		"title": "🔒 Канал закрыт",
-		"description": "Отправка сообщений в {channel_mention} запрещена.",
-		"color": "FF0000",
+		"title": "🔒 | Канал изолирован",
+		"description": "Отправка сообщений в {channel_mention} **приостановлена**.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Lockdown", "icon_url": "{author_avatar}" }
 	},
 	"log_lock": {
-		"title": "🔒 Лог: Блокировка канала",
+		"title": "🔒 Лог: Lockdown",
 		"fields": [
-			{ "name": "📍 Канал", "value": "{channel_mention}", "inline": true },
-			{ "name": "🛡️ Модератор", "value": "{moderator_mention}", "inline": true }
+			{ "name": "Канал", "value": "{channel_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true }
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Admin Logger", "icon_url": "{author_avatar}" }
 	},
 	"success_unlock": {
-		"title": "🔓 Канал открыт",
-		"description": "Отправка сообщений в {channel_mention} разрешена.",
-		"color": "FF0000",
+		"title": "🔓 | Канал открыт",
+		"description": "Отправка сообщений в {channel_mention} **возобновлена**.",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Lockdown", "icon_url": "{author_avatar}" }
 	},
 	"log_unlock": {
-		"title": "🔓 Лог: Разблокировка канала",
+		"title": "🔓 Лог: Unlock",
 		"fields": [
-			{ "name": "📍 Канал", "value": "{channel_mention}", "inline": true },
-			{ "name": "🛡️ Модератор", "value": "{moderator_mention}", "inline": true }
+			{ "name": "Канал", "value": "{channel_mention}", "inline": true },
+			{ "name": "Модератор", "value": "{moderator_mention}", "inline": true }
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Admin Log", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Admin Logger", "icon_url": "{author_avatar}" }
 	},
 	"history_embed": {
-		"title": "📜 История нарушений",
+		"title": "📜 | История наказаний",
 		"description": "**Пользователь:** {user_mention}\n**Фильтр:** `{filter_name}`\n\n{history_text}",
-		"color": "808080",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "База данных", "icon_url": "{author_avatar}" }
 	},
 	"admin_whois": {
-		"title": "📁 Личное дело: {user_display_name}",
+		"title": "📁 Досье: {user_display_name}",
 		"thumbnail": "{user_avatar}",
 		"fields": [
 			{
-				"name": "📋 Инфо",
-				"value": "ID: `{user_id}`\nСоздан: <t:{created_at}:D>\nБио: {bio}",
+				"name": "📋 Основная информация",
+				"value": "**ID:** `{user_id}`\n**Регистрация:** <t:{created_at}:d>\n**Вход:** <t:{joined_at}:d>\n**Био:** {bio}",
 				"inline": false
 			},
 			{
-				"name": "💳 Финансы",
-				"value": "Наличные: {money}\nБанк: {bank}\nРейтинг: {rate}",
+				"name": "💳 Активы",
+				"value": "💵 Наличные: **{money} $**\n🏦 Банк: **{bank} $**\n⭐ Рейтинг: **{rate}**",
 				"inline": true
 			},
 			{
-				"name": "⚖️ Нарушения",
-				"value": "Варны: {warns_active}\nМьюты: {mutes_total}\nБаны: {bans_total}",
-				"inline": false
-			},
-			{ "name": "🎭 Роли ({roles_count})", "value": "{roles}", "inline": false }
-		],
-		"color": "808080",
-		"timestamp": true,
-		"footer": { "text": "Admin System", "icon_url": "{author_avatar}" }
-	},
-
-	"success_work": {
-		"title": "👷 Работа завершена",
-		"description": "Отличная смена! Вот ваш отчет.",
-		"fields": [
-			{
-				"name": "🔨 Профессия",
-				"value": "**{job_name}** (Тир {job_tier})",
+				"name": "⚖️ Правопорядок",
+				"value": "⚠️ Варны: **{warns_active}**\n🔇 Муты: **{mutes_total}**\n🔨 Баны: **{bans_total}**",
 				"inline": true
 			},
-			{ "name": "💰 Заработок", "value": "`{amount}` монет", "inline": true },
 			{
-				"name": "⭐ Опыт",
-				"value": "+{xp_gain} XP (Всего: {total_xp})",
-				"inline": true
-			},
-			{ "name": "📖 Что сделано", "value": "_{phrase}_", "inline": false }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"success_pay": {
-		"title": "💸 Перевод средств",
-		"fields": [
-			{ "name": "📤 От", "value": "{sender_mention}", "inline": true },
-			{ "name": "📥 Кому", "value": "{target_mention}", "inline": true },
-			{ "name": "💰 Сумма", "value": "`{amount}`", "inline": true },
-			{
-				"name": "ℹ️ Детали",
-				"value": "{source_type} ➡️ {target_type}",
+				"name": "🎭 Роли сервера ({roles_count})",
+				"value": "{roles}",
 				"inline": false
 			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Панель администратора", "icon_url": "{author_avatar}" }
+	},
+
+	"success_work": {
+		"title": "👷 | Смена окончена!",
+		"description": "Вы отлично потрудились.",
+		"fields": [
+			{
+				"name": "🔨 Профессия",
+				"value": "**{job_name}** (Ранг {job_tier})",
+				"inline": true
+			},
+			{
+				"name": "💵 Заработок",
+				"value": "```cs\n+ {amount} $\n```",
+				"inline": true
+			},
+			{
+				"name": "📚 Прогресс",
+				"value": "`+{xp_gain} XP` (Всего: {total_xp})",
+				"inline": true
+			},
+			{ "name": "📝 Отчет", "value": "> {phrase}", "inline": false }
+		],
+		"color": "F1C40F",
+		"timestamp": true,
+		"footer": { "text": "Центр занятости", "icon_url": "{author_avatar}" }
+	},
+	"success_pay": {
+		"title": "💸 | Перевод средств",
+		"description": "Транзакция выполнена успешно.",
+		"fields": [
+			{ "name": "📤 Отправитель", "value": "{sender_mention}", "inline": true },
+			{ "name": "📥 Получатель", "value": "{target_mention}", "inline": true },
+			{ "name": "💰 Сумма", "value": "```cs\n{amount} $\n```", "inline": true },
+			{
+				"name": "🧾 Детали перевода",
+				"value": "**{source_type}** ➔ **{target_type}**\nКомиссия: `{fee} $`\nЗачислено: `{received} $`",
+				"inline": false
+			}
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Банкинг", "icon_url": "{author_avatar}" }
 	},
 	"log_pay": {
 		"title": "📊 Лог: Транзакция",
 		"fields": [
-			{ "name": "От кого", "value": "{sender_mention}", "inline": true },
+			{ "name": "От", "value": "{sender_mention}", "inline": true },
 			{ "name": "Кому", "value": "{target_mention}", "inline": true },
 			{
 				"name": "Сумма",
-				"value": "**{amount}** (Комиссия: {fee})",
+				"value": "**{amount} $** (Fee: {fee})",
 				"inline": true
 			},
 			{
-				"name": "Тип",
+				"name": "Маршрут",
 				"value": "`{source_type}` ➔ `{target_type}`",
 				"inline": false
 			}
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Economy Log", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Economy Logger", "icon_url": "{author_avatar}" }
 	},
 	"success_deposit": {
-		"title": "🏦 Пополнение банка",
-		"description": "Средства зачислены на счет.",
-		"fields": [
-			{ "name": "📥 Внесено", "value": "**{amount}**", "inline": true },
-			{ "name": "💳 Баланс банка", "value": "`{new_bank}`", "inline": true },
-			{ "name": "💵 Наличные", "value": "`{new_money}`", "inline": true }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"family_deposit": {
-		"title": "💕 Семейный бюджет пополнен",
-		"description": "Вы внесли **{amount}** в казну семьи.",
-		"fields": [
-			{ "name": "📥 Внесено", "value": "**{amount}**", "inline": true },
-			{ "name": "💳 Баланс семьи", "value": "`{new_bank}`", "inline": true },
-			{ "name": "💵 Наличные", "value": "`{new_money}`", "inline": true }
-		],
-		"color": "0000FF",
-		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
-	},
-	"success_withdraw": {
-		"title": "🏧 Снятие наличных",
+		"title": "🏦 | Банковский депозит",
+		"description": "Средства успешно инкассированы.",
 		"fields": [
 			{
-				"name": "💸 Снято",
-				"value": "**{received}** (Комиссия: {fee})",
+				"name": "📥 Внесено",
+				"value": "```cs\n+ {amount} $\n```",
+				"inline": true
+			},
+			{ "name": "💳 На счете", "value": "**{new_bank} $**", "inline": true },
+			{ "name": "💵 На руках", "value": "**{new_money} $**", "inline": true }
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Национальный Банк", "icon_url": "{author_avatar}" }
+	},
+	"family_deposit": {
+		"title": "🏩 | Семейный бюджет",
+		"description": "Пополнение казны семьи.",
+		"fields": [
+			{
+				"name": "📥 Вклад",
+				"value": "```cs\n+ {amount} $\n```",
+				"inline": true
+			},
+			{ "name": "💳 Казна семьи", "value": "**{new_bank} $**", "inline": true },
+			{ "name": "💵 Ваш остаток", "value": "**{new_money} $**", "inline": true }
+		],
+		"color": "EB459E",
+		"timestamp": true,
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
+	},
+	"success_withdraw": {
+		"title": "🏧 | Выдача наличных",
+		"fields": [
+			{
+				"name": "📤 Снято",
+				"value": "```cs\n- {received} $\n```",
 				"inline": false
 			},
-			{ "name": "💳 Баланс банка", "value": "`{new_bank}`", "inline": true },
-			{ "name": "💵 Наличные", "value": "`{new_money}`", "inline": true }
+			{ "name": "🧾 Комиссия", "value": "`{fee} $`", "inline": true },
+			{
+				"name": "💳 Остаток в банке",
+				"value": "**{new_bank} $**",
+				"inline": true
+			}
 		],
-		"color": "00FF00",
+		"color": "F1C40F",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Банкомат", "icon_url": "{author_avatar}" }
 	},
 	"family_withdraw": {
-		"title": "💸 Снятие из семейного бюджета",
+		"title": "🏩 | Семейный бюджет",
+		"description": "Снятие средств из казны.",
 		"fields": [
-			{ "name": "💸 Снято", "value": "**{amount}**", "inline": false },
-			{ "name": "💳 Баланс семьи", "value": "`{new_bank}`", "inline": true },
-			{ "name": "💵 Наличные", "value": "`{new_money}`", "inline": true }
+			{
+				"name": "📤 Снято",
+				"value": "```cs\n- {amount} $\n```",
+				"inline": false
+			},
+			{ "name": "💳 Казна семьи", "value": "**{new_bank} $**", "inline": true },
+			{
+				"name": "💵 Ваши наличные",
+				"value": "**{new_money} $**",
+				"inline": true
+			}
 		],
-		"color": "0000FF",
+		"color": "EB459E",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"biz_dashboard": {
-		"title": "🏢 Управление: {biz_name}",
+		"title": "🏢 Панель управления: {biz_name}",
 		"description": "{economy_status}",
 		"fields": [
-			{ "name": "💰 Касса", "value": "`{balance}`", "inline": true },
+			{
+				"name": "💰 Касса",
+				"value": "```cs\n{balance} $\n```",
+				"inline": true
+			},
 			{
 				"name": "📦 Склад",
 				"value": "`{supplies}/{max_storage}`\n{storage_progress}",
 				"inline": true
 			},
-			{ "name": "📊 Уровни", "value": "{levels_info}", "inline": false },
-			{ "name": "ℹ️ Статус", "value": "{status}", "inline": false }
+			{ "name": "📊 Модернизация", "value": "{levels_info}", "inline": false },
+			{ "name": "ℹ️ Статус производства", "value": "{status}", "inline": false }
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Бизнес-менеджер", "icon_url": "{author_avatar}" }
 	},
 	"biz_buy_success": {
-		"title": "🤝 Покупка бизнеса",
-		"description": "Вы приобрели **{biz_name}**.",
-		"fields": [{ "name": "💸 Цена", "value": "`{price}`", "inline": true }],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"biz_no_business": {
-		"title": "❌ Нет бизнеса",
-		"description": "У вас нет активных предприятий. Используйте `/бизнес купить`.",
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"biz_shop_main": {
-		"title": "📈 Биржа предприятий",
-		"description": "Инвестируйте в будущее! Выберите категорию ниже.",
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"biz_upgrade_menu": {
-		"title": "🛠️ Модернизация",
-		"description": "Улучшайте показатели для увеличения прибыли.\nМакс. уровень: **{max_lvl}**",
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"biz_sell_select": {
-		"title": "💸 Продажа активов",
-		"description": "Выберите бизнес для продажи.\n⚠️ Вы получите **50%** от гос. стоимости.",
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"success_sell_biz": {
-		"title": "✅ Бизнес продан",
-		"description": "Вы продали **{biz_name}**.",
-		"fields": [
-			{ "name": "➕ Получено", "value": "`{amount}`", "inline": true }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"biz_sell_confirm": {
-		"title": "⚠️ Продажа бизнеса",
-		"description": "Вы уверены, что хотите продать **{biz_name}**?",
-		"fields": [{ "name": "💰 Выплата", "value": "`{amount}`", "inline": true }],
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
-	},
-	"user_businesses": {
-		"title": "📂 Портфель: {display_name}",
-		"description": "Предприятий во владении: **{count}**",
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" },
-		"field_layout": "**📊 Финансы:**\n💵 Баланс: `{balance}`\n📦 Сырьё: `{supplies}`\n📈 Прибыль: `{earnings}`\n\n**🛠️ Улучшения (Ур. {total_lvl}):**\n{upgrades}"
-	},
-	"casino_win": {
-		"title": "🎰 Победа!",
-		"description": "Игра: **{game_name}**",
-		"fields": [
-			{ "name": "Ставка", "value": "`{bet}`", "inline": true },
-			{ "name": "Выигрыш", "value": "**{prize}**", "inline": true }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Casino System", "icon_url": "{author_avatar}" }
-	},
-	"casino_lose": {
-		"title": "🎰 Проигрыш",
-		"description": "Игра: **{game_name}**",
-		"fields": [{ "name": "Потеряно", "value": "`{bet}`", "inline": true }],
-		"color": "FF0000",
-		"timestamp": true,
-		"footer": { "text": "Casino System", "icon_url": "{author_avatar}" }
-	},
-	"casino_blackjack_game": {
-		"title": "🃏 Блэкджек",
-		"description": "Текущая партия",
+		"title": "🤝 | Сделка совершена",
+		"description": "Поздравляем! Теперь вы владелец **{biz_name}**.",
 		"fields": [
 			{
-				"name": "👤 Вы ({player_score})",
-				"value": "{player_hand}",
+				"name": "💸 Стоимость покупки",
+				"value": "```cs\n{price} $\n```",
+				"inline": true
+			}
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Реестр предприятий", "icon_url": "{author_avatar}" }
+	},
+	"biz_no_business": {
+		"title": "🚫 | Нет активов",
+		"description": "У вас пока нет действующих предприятий.\nИспользуйте `/бизнес купить` для начала своего дела.",
+		"color": "ED4245",
+		"timestamp": true,
+		"footer": { "text": "Бизнес", "icon_url": "{author_avatar}" }
+	},
+	"biz_shop_main": {
+		"title": "📈 | Биржа предприятий",
+		"description": "Инвестируйте в реальный сектор экономики! Выберите категорию ниже для просмотра лотов.",
+		"color": "5865F2",
+		"timestamp": true,
+		"footer": { "text": "Фондовая биржа", "icon_url": "{author_avatar}" }
+	},
+	"biz_upgrade_menu": {
+		"title": "🛠️ | Центр модернизации",
+		"description": "Улучшайте показатели для максимизации прибыли.\n**Максимальный уровень:** `{max_lvl}`",
+		"color": "F1C40F",
+		"timestamp": true,
+		"footer": { "text": "Инженерный корпус", "icon_url": "{author_avatar}" }
+	},
+	"biz_sell_select": {
+		"title": "📉 | Ликвидация активов",
+		"description": "Выберите бизнес для продажи.\n⚠️ **Внимание:** Вы получите только **50%** от государственной стоимости.",
+		"color": "F1C40F",
+		"timestamp": true,
+		"footer": { "text": "Нотариус", "icon_url": "{author_avatar}" }
+	},
+	"success_sell_biz": {
+		"title": "✅ | Актив продан",
+		"description": "Предприятие **{biz_name}** успешно продано.",
+		"fields": [
+			{
+				"name": "➕ Зачислено",
+				"value": "```cs\n{amount} $\n```",
+				"inline": true
+			}
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": { "text": "Финансы", "icon_url": "{author_avatar}" }
+	},
+	"biz_sell_confirm": {
+		"title": "⚠️ | Подтверждение сделки",
+		"description": "Вы уверены, что хотите продать **{biz_name}**?",
+		"fields": [
+			{ "name": "💰 Сумма выплаты", "value": "**{amount} $**", "inline": true }
+		],
+		"color": "FEE75C",
+		"timestamp": true,
+		"footer": {
+			"text": "Ожидание подтверждения",
+			"icon_url": "{author_avatar}"
+		}
+	},
+	"user_businesses": {
+		"title": "📂 Портфель активов: {display_name}",
+		"description": "Всего предприятий: **{count}**",
+		"color": "5865F2",
+		"timestamp": true,
+		"footer": { "text": "ФНС", "icon_url": "{author_avatar}" },
+		"field_layout": "**📊 Финансы**\n💵 Баланс: `{balance} $`\n📦 Сырьё: `{supplies}`\n📈 Заработано: `{earnings} $`\n\n**🛠️ Технологии (Суммарный Ур. {total_lvl})**\n{upgrades}"
+	},
+	"casino_win": {
+		"title": "🎰 | Крупный выигрыш!",
+		"description": "Игра: **{game_name}**",
+		"fields": [
+			{ "name": "Ставка", "value": "`{bet} $`", "inline": true },
+			{ "name": "Выплата", "value": "```cs\n+ {prize} $\n```", "inline": true }
+		],
+		"color": "F1C40F",
+		"timestamp": true,
+		"footer": { "text": "Казино Royal", "icon_url": "{author_avatar}" }
+	},
+	"casino_lose": {
+		"title": "🎰 | Удача отвернулась",
+		"description": "Игра: **{game_name}**",
+		"fields": [
+			{ "name": "Потеряно", "value": "```cs\n- {bet} $\n```", "inline": true }
+		],
+		"color": "2B2D31",
+		"timestamp": true,
+		"footer": { "text": "Казино Royal", "icon_url": "{author_avatar}" }
+	},
+	"casino_blackjack_game": {
+		"title": "🃏 | Блэкджек",
+		"description": "Ставка: **{bet} $**",
+		"fields": [
+			{
+				"name": "👤 Ваш раздача ({player_score})",
+				"value": ">>> {player_hand}",
 				"inline": true
 			},
 			{
 				"name": "🤖 Дилер ({dealer_score})",
-				"value": "{dealer_hand}",
+				"value": ">>> {dealer_hand}",
 				"inline": true
 			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Ставка: {bet}", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Казино Royal", "icon_url": "{author_avatar}" }
 	},
 	"success_crime": {
-		"title": "🔫 Ограбление успешно",
-		"description": "Вы ограбили **{target_name}**!",
-		"fields": [{ "name": "💰 Добыча", "value": "`{amount}`", "inline": true }],
-		"color": "00FF00",
+		"title": "🔫 | Удачное дело",
+		"description": "Вы успешно ограбили **{target_name}**!",
+		"fields": [
+			{
+				"name": "💰 Добыча",
+				"value": "```cs\n+ {amount} $\n```",
+				"inline": true
+			}
+		],
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Криминал", "icon_url": "{author_avatar}" }
 	},
 	"fail_crime": {
-		"title": "🚓 Ограбление провалено",
-		"description": "Вас поймали при попытке ограбить **{target_name}**.",
+		"title": "🚓 | Провал операции",
+		"description": "Полиция перехватила вас при попытке ограбить **{target_name}**.",
 		"fields": [
-			{ "name": "👮 Штраф", "value": "`{fine}`", "inline": true },
-			{ "name": "⛓️ Срок", "value": "{time_str}", "inline": true }
+			{ "name": "👮 Штраф", "value": "`-{fine} $`", "inline": true },
+			{ "name": "⛓️ Тюремный срок", "value": "**{time_str}**", "inline": true }
 		],
-		"color": "FF0000",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Полицейский участок", "icon_url": "{author_avatar}" }
 	},
 	"error_prison": {
-		"title": "⛓️ Вы в тюрьме",
-		"description": "Осталось сидеть: <t:{release_time}:R>",
-		"color": "FF0000",
+		"title": "⛓️ | Заключение",
+		"description": "Вы находитесь в тюрьме. Доступ к этой функции заблокирован.",
+		"fields": [
+			{
+				"name": "⏳ Освобождение",
+				"value": "<t:{release_time}:R>",
+				"inline": true
+			}
+		],
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "ФСИН", "icon_url": "{author_avatar}" }
 	},
 	"role_buy_request": {
-		"title": "🎨 Заявка на роль",
-		"description": "Пользователь хочет купить роль.",
+		"title": "🎨 Запрос: Личная роль",
+		"description": "Пользователь желает приобрести кастомную роль.",
 		"fields": [
-			{ "name": "👤 Юзер", "value": "{user_mention}", "inline": true },
+			{ "name": "👤 Заказчик", "value": "{user_mention}", "inline": true },
 			{
-				"name": "🏷️ Роль",
-				"value": "**{role_name}** ({role_color})",
+				"name": "🏷️ Параметры",
+				"value": "Название: **{role_name}**\nЦвет: `{role_color}`",
 				"inline": true
 			},
-			{ "name": "💸 Цена", "value": "`{price}`", "inline": true }
+			{
+				"name": "💸 Стоимость",
+				"value": "```cs\n{price} $\n```",
+				"inline": true
+			}
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Economy Log", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Economy Logger", "icon_url": "{author_avatar}" }
 	},
 	"role_buy_success": {
-		"title": "✅ Роль создана",
-		"description": "Роль **{role_name}** выдана {user_mention}.",
-		"color": "00FF00",
+		"title": "✅ | Роль создана",
+		"description": "Уникальная роль **{role_name}** выдана пользователю {user_mention}.",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Магазин ролей", "icon_url": "{author_avatar}" }
 	},
 	"role_buy_denied": {
-		"title": "❌ Заявка отклонена",
-		"description": "Роль **{role_name}** для {user_mention} не одобрена.",
-		"color": "FF0000",
+		"title": "❌ | Заявка отклонена",
+		"description": "Создание роли **{role_name}** для {user_mention} не было одобрено.",
+		"color": "ED4245",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Магазин ролей", "icon_url": "{author_avatar}" }
 	},
 	"estate_buy_success": {
-		"title": "🔑 Недвижимость куплена",
-		"description": "Вы купили **{house_name}**.",
-		"fields": [{ "name": "💸 Цена", "value": "`{price}`", "inline": true }],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
-	},
-	"estate_sell_confirm": {
-		"title": "🏚️ Продажа недвижимости",
-		"description": "Продать **{house_name}**?",
+		"title": "🔑 | Ключи получены",
+		"description": "Поздравляем с новосельем! Вы приобрели **{house_name}**.",
 		"fields": [
 			{
-				"name": "💵 Цена покупки",
-				"value": "`{original_price}`",
+				"name": "💸 Сумма сделки",
+				"value": "```cs\n{price} $\n```",
+				"inline": true
+			}
+		],
+		"color": "2ECC71",
+		"timestamp": true,
+		"footer": {
+			"text": "Агентство недвижимости",
+			"icon_url": "{author_avatar}"
+		}
+	},
+	"estate_sell_confirm": {
+		"title": "🏚️ | Продажа недвижимости",
+		"description": "Вы действительно хотите продать **{house_name}**?",
+		"fields": [
+			{
+				"name": "💵 Покупали за",
+				"value": "`{original_price} $`",
 				"inline": true
 			},
-			{ "name": "💸 Выплата", "value": "`{sell_price}`", "inline": true }
+			{
+				"name": "💸 Получите",
+				"value": "**{sell_price} $** ({ratio}%)",
+				"inline": true
+			}
 		],
-		"color": "FF0000",
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": {
+			"text": "Агентство недвижимости",
+			"icon_url": "{author_avatar}"
+		}
 	},
 	"estate_sell_success": {
-		"title": "✅ Недвижимость продана",
-		"description": "Вы продали **{house_name}**.",
+		"title": "✅ | Недвижимость продана",
+		"description": "Права собственности на **{house_name}** переданы государству.",
 		"fields": [
-			{ "name": "➕ Получено", "value": "`{amount}`", "inline": true }
+			{
+				"name": "➕ Зачислено",
+				"value": "```cs\n{amount} $\n```",
+				"inline": true
+			}
 		],
-		"color": "00FF00",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": {
+			"text": "Агентство недвижимости",
+			"icon_url": "{author_avatar}"
+		}
 	},
 	"estate_room_welcome": {
-		"title": "🏠 Умный дом",
-		"description": "Добро пожаловать, {user_mention}!\nПанель управления активирована.",
-		"color": "00FF00",
+		"title": "🏠 | Умный дом",
+		"description": "Добро пожаловать домой, {user_mention}!\nПанель управления голосовой комнатой активирована.",
+		"color": "2ECC71",
 		"timestamp": true
 	},
 	"house_invite_sent": {
-		"title": "📨 Приглашение отправлено",
-		"description": "Вы предложили {user_mention} переехать к вам.",
+		"title": "📨 | Приглашение отправлено",
+		"description": "Вы предложили {user_mention} заселиться к вам.",
 		"fields": [
-			{ "name": "💸 Рента", "value": "`{price}` / сутки", "inline": true }
+			{
+				"name": "💸 Условия аренды",
+				"value": "`{price} $` / сутки",
+				"inline": true
+			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Жилищный вопрос", "icon_url": "{author_avatar}" }
 	},
 	"house_invite_received": {
-		"title": "📬 Новое приглашение",
-		"description": "{author_mention} зовет вас жить вместе!",
+		"title": "📬 | Новое приглашение",
+		"description": "{author_mention} предлагает вам жить вместе!",
 		"fields": [
 			{ "name": "🏠 Владелец", "value": "{author_mention}", "inline": true },
-			{ "name": "💸 Рента", "value": "`{price}` / сутки", "inline": true }
+			{ "name": "💸 Аренда", "value": "`{price} $` / сутки", "inline": true }
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Жилищный вопрос", "icon_url": "{author_avatar}" }
 	},
 	"house_new_tenant": {
-		"title": "👥 Пополнение",
-		"description": "{user_mention} теперь живет с вами!",
-		"color": "00FF00",
+		"title": "👥 | Новый жилец",
+		"description": "{user_mention} принял ваше предложение и заселился.",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Недвижимость", "icon_url": "{author_avatar}" }
 	},
 	"house_leave": {
-		"title": "👋 Выселение",
-		"description": "Вы покинули дом владельца {owner_mention}.",
-		"color": "FF0000",
+		"title": "👋 | Выселение",
+		"description": "Вы съехали из дома владельца {owner_mention}.",
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Недвижимость", "icon_url": "{author_avatar}" }
 	},
 	"house_tenants_list": {
-		"title": "📜 Список жильцов",
+		"title": "📜 | Список жильцов",
 		"description": "{description}",
-		"color": "808080",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Домовая книга", "icon_url": "{author_avatar}" }
 	},
 	"house_info_owner": {
 		"title": "{house_name}",
 		"thumbnail": "{thumbnail_url}",
 		"fields": [
-			{ "name": "📜 Статус", "value": "👑 **Владелец**", "inline": true },
-			{ "name": "📅 Покупка", "value": "{bought_at}", "inline": true },
-			{ "name": "💰 Гос. цена", "value": "`{price}`", "inline": true },
-			{ "name": "💸 Продажа", "value": "`{sell_price}`", "inline": true },
+			{ "name": "📜 Права", "value": "👑 **Владелец**", "inline": true },
+			{ "name": "📅 Дата покупки", "value": "{bought_at}", "inline": true },
+			{ "name": "💰 Гос. цена", "value": "`{price} $`", "inline": true },
 			{
-				"name": "👥 Жильцы",
-				"value": "**{tenants_count}** / {max_tenants}",
+				"name": "💸 Цена продажи",
+				"value": "`{sell_price} $`",
 				"inline": true
 			},
 			{
-				"name": "🔊 Комната",
-				"value": "Слоты: **{slots}**\nБитрейт: **{bitrate} kbps**",
+				"name": "👥 Население",
+				"value": "**{tenants_count}** / {max_tenants} чел.",
+				"inline": true
+			},
+			{
+				"name": "🔊 Тех. параметры",
+				"value": "Слоты: **{slots}**\nКачество: **{bitrate} kbps**",
 				"inline": true
 			}
 		],
-		"color": "00FF00",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Кадастровый паспорт", "icon_url": "{author_avatar}" }
 	},
 	"house_info_tenant": {
 		"title": "{house_name}",
 		"thumbnail": "{thumbnail_url}",
 		"fields": [
-			{ "name": "📜 Статус", "value": "👤 **Жилец**", "inline": true },
-			{ "name": "👑 Владелец", "value": "**{owner_name}**", "inline": true },
+			{ "name": "📜 Права", "value": "👤 **Арендатор**", "inline": true },
+			{ "name": "👑 Собственник", "value": "**{owner_name}**", "inline": true },
 			{
-				"name": "💵 Аренда",
-				"value": "`{rent_price}` / сутки",
+				"name": "💵 Плата",
+				"value": "`{rent_price} $` / сутки",
 				"inline": true
 			},
 			{
-				"name": "👥 Жильцы",
+				"name": "👥 Соседи",
 				"value": "**{tenants_count}** / {max_tenants}",
 				"inline": true
 			},
 			{
-				"name": "🔊 Комната",
-				"value": "Слоты: **{slots}**\nБитрейт: **{bitrate} kbps**",
+				"name": "🔊 Тех. параметры",
+				"value": "Слоты: **{slots}**\nКачество: **{bitrate} kbps**",
 				"inline": true
 			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Информация о жилье", "icon_url": "{author_avatar}" }
 	},
 	"finance_deposit_new": {
-		"title": "🏦 Вклад открыт",
-		"description": "Условия зафиксированы.",
+		"title": "🏦 | Договор вклада",
+		"description": "Вклад успешно открыт.",
 		"fields": [
-			{ "name": "📥 Сумма", "value": "**{amount}**", "inline": true },
-			{ "name": "⏳ Срок", "value": "**{days}** дн.", "inline": true },
-			{ "name": "📈 Итог", "value": "**{total}**", "inline": true }
+			{ "name": "📥 Внесено", "value": "**{amount} $**", "inline": true },
+			{ "name": "⏳ Срок", "value": "`{days}` дн.", "inline": true },
+			{
+				"name": "📈 Вы получите",
+				"value": "```cs\n{total} $\n```",
+				"inline": true
+			},
+			{ "name": "📊 Процент", "value": "**{percent}%**", "inline": true }
 		],
-		"color": "00FF00",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Инвестиции", "icon_url": "{author_avatar}" }
 	},
 	"finance_deposit_active": {
-		"title": "🏦 Активный вклад",
+		"title": "🏦 | Ваш активный вклад",
 		"fields": [
-			{ "name": "💰 Тело", "value": "`{amount}`", "inline": true },
-			{ "name": "📈 Итог", "value": "`{total}`", "inline": true },
-			{ "name": "📅 Конец", "value": "<t:{end_time}:D>", "inline": false },
+			{ "name": "💰 Тело вклада", "value": "`{amount} $`", "inline": true },
+			{ "name": "📈 Ожидаемый итог", "value": "`{total} $`", "inline": true },
 			{
-				"name": "⚠️ Досрочно",
-				"value": "Штраф: **{penalty_pct}%**. Вернется: `{return_amount}`",
+				"name": "📅 Дата выплаты",
+				"value": "<t:{end_time}:D> (<t:{end_time}:R>)",
+				"inline": false
+			},
+			{
+				"name": "⚠️ Закрыть досрочно",
+				"value": "Штраф: **{penalty_pct}%**\nК возврату: **{return_amount} $**",
 				"inline": false
 			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Инвестиции", "icon_url": "{author_avatar}" }
 	},
 	"finance_deposit_early_close": {
-		"title": "📉 Вклад закрыт досрочно",
-		"description": "Вы забрали средства со штрафом.",
-		"fields": [{ "name": "🔙 Возврат", "value": "`{amount}`", "inline": true }],
-		"color": "FF0000",
+		"title": "📉 | Вклад закрыт досрочно",
+		"description": "Вы отозвали средства. Применен штраф за досрочное расторжение.",
+		"fields": [
+			{
+				"name": "🔙 Возвращено",
+				"value": "```cs\n{amount} $\n```",
+				"inline": true
+			}
+		],
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Инвестиции", "icon_url": "{author_avatar}" }
 	},
 	"finance_credit_offer": {
-		"title": "📝 Кредитное предложение",
-		"description": "Банк готов выдать вам займ.",
+		"title": "📝 | Кредитное предложение",
+		"description": "Банк предварительно одобрил вам кредитную линию.",
 		"fields": [
-			{ "name": "📊 Рейтинг", "value": "**{rating}**", "inline": true },
-			{ "name": "💰 Лимит", "value": "**{max_loan}**", "inline": true },
+			{ "name": "📊 Ваш рейтинг", "value": "**{rating}**", "inline": true },
+			{
+				"name": "💰 Макс. лимит",
+				"value": "```cs\n{max_loan} $\n```",
+				"inline": true
+			},
 			{
 				"name": "ℹ️ Условия",
 				"value": "Ставка: **{percent}%**\nСрок: **{days} дней**",
 				"inline": false
 			}
 		],
-		"color": "00FF00",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Кредитный отдел", "icon_url": "{author_avatar}" }
 	},
 	"finance_credit_active": {
-		"title": "💳 Кредит",
-		"description": "Информация о текущем займе.",
+		"title": "💳 | Текущий кредит",
+		"description": "Информация о задолженности.",
 		"fields": [
-			{ "name": "Взято", "value": "`{taken}`", "inline": true },
-			{ "name": "Долг", "value": "`{left}`", "inline": true },
-			{ "name": "Срок", "value": "<t:{due_time}:R>", "inline": true },
+			{ "name": "Взято", "value": "`{taken} $`", "inline": true },
+			{
+				"name": "Остаток долга",
+				"value": "```cs\n{left} $\n```",
+				"inline": true
+			},
+			{ "name": "Срок оплаты", "value": "<t:{due_time}:R>", "inline": true },
 			{ "name": "Статус", "value": "**{status}**", "inline": false }
 		],
-		"color": "00FF00",
+		"color": "F1C40F",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Кредитный отдел", "icon_url": "{author_avatar}" }
 	},
 	"whois_finance": {
-		"title": "🏦 Финансовая сводка",
+		"title": "🏦 | Финансовый отчет",
 		"fields": [
-			{ "name": "📊 Рейтинг", "value": "`{rating}`", "inline": false },
-			{ "name": "📥 Депозиты", "value": "{deposit_info}", "inline": false },
-			{ "name": "💳 Кредиты", "value": "{loan_info}", "inline": false }
+			{
+				"name": "📊 Кредитный рейтинг",
+				"value": "⭐ `{rating}`",
+				"inline": false
+			},
+			{
+				"name": "📥 Активные вклады",
+				"value": "{deposit_info}",
+				"inline": false
+			},
+			{
+				"name": "💳 Кредитная история",
+				"value": "{loan_info}",
+				"inline": false
+			}
 		],
-		"color": "808080",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Финансы", "icon_url": "{author_avatar}" }
 	},
 	"transaction_history": {
-		"title": "🧾 Выписка",
-		"description": "**Клиент:** {user_mention}\n\n{history_text}",
-		"color": "00FF00",
+		"title": "🧾 | Выписка по счету",
+		"description": "**Клиент:** {user_mention}\n━━━━━━━━━━━━━━━━━━━\n{history_text}",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Economy System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "История операций", "icon_url": "{author_avatar}" }
 	},
 
 	"success_bio": {
-		"title": "📝 Биография обновлена",
-		"description": "```{bio}```",
-		"color": "0000FF",
+		"title": "📝 | Биография обновлена",
+		"description": ">>> {bio}",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Профиль", "icon_url": "{author_avatar}" }
 	},
 	"proposal": {
-		"title": "💍 Предложение руки и сердца",
-		"description": "{author_mention} делает предложение {target_mention}!\nЦена церемонии: `{price}`",
-		"color": "0000FF",
+		"title": "💍 | Предложение руки и сердца",
+		"description": "{author_mention} встает на одно колено перед {target_mention}...\n\n> *Ты выйдешь за меня?*\n\nСтоимость церемонии: `{price} $`",
+		"color": "EB459E",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Любовь", "icon_url": "{author_avatar}" }
 	},
 	"success_marriage": {
-		"title": "🔔 Свадьба!",
-		"description": "Поздравляем! {user1} и {user2} теперь в браке! 🎉",
-		"color": "0000FF",
+		"title": "🔔 | Объявлены мужем и женой!",
+		"description": "Поздравляем! {user1} и {user2} скрепили свой союз узами брака! 🎉",
+		"color": "EB459E",
 		"timestamp": true,
-		"image": {
-			"url": "https://media.discordapp.net/attachments/1394260809277767710/1464578496469663940/married.jpg"
-		},
-		"footer": { "text": "Social System", "icon_url": "" }
+		"footer": { "text": "Свадьба", "icon_url": "" }
 	},
 	"success_divorce": {
-		"title": "💔 Развод",
-		"description": "Брак {user1} и {user2} расторгнут.\nРаздел имущества: `{share}` каждому.",
-		"color": "0000FF",
+		"title": "💔 | Брак расторгнут",
+		"description": "Союз {user1} и {user2} официально прекращен.\n\n**Раздел имущества:**\nКаждый получил: `{share} $`",
+		"color": "2B2D31",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "" }
+		"footer": { "text": "ЗАГС", "icon_url": "" }
 	},
 	"family_profile": {
-		"title": "💕 Семья",
+		"title": "💕 Семейный профиль",
 		"fields": [
 			{
-				"name": "Пара",
+				"name": "Супруги",
 				"value": "{user1_mention} 💍 {user2_mention}",
 				"inline": false
 			},
-			{ "name": "Бюджет", "value": "`{balance}`", "inline": true },
-			{ "name": "Любовь", "value": "**{level}** (XP: {xp})", "inline": true },
-			{ "name": "Дата", "value": "<t:{date}:D>", "inline": false }
+			{ "name": "Бюджет", "value": "```cs\n{balance} $\n```", "inline": true },
+			{
+				"name": "Уровень любви",
+				"value": "**{level}** (XP: {xp})",
+				"inline": true
+			},
+			{ "name": "В браке с", "value": "<t:{date}:D>", "inline": false }
 		],
-		"color": "0000FF",
+		"color": "EB459E",
 		"timestamp": true,
-		"image": {
-			"url": "https://media.discordapp.net/attachments/1394260809277767710/1464578496004362250/marry_profile.jpg"
-		},
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"success_love": {
-		"title": "💖 Любовь",
-		"description": "{user1_mention} и {user2_mention} провели время вместе.\nУровень: `{level}`",
-		"color": "0000FF",
+		"title": "💖 | Романтика",
+		"description": "{user1_mention} и {user2_mention} провели незабываемое время вместе.\n\n🆙 **Уровень отношений:** `{level}`",
+		"color": "EB459E",
 		"timestamp": true,
-		"image": {
-			"url": "https://media.discordapp.net/attachments/1394260809277767710/1464578495383343221/love.jpg"
-		},
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Любовь", "icon_url": "{author_avatar}" }
 	},
 	"info_no_family": {
-		"title": "👤 Статус: Холост",
-		"description": "У пользователя {user_mention} нет пары.",
-		"color": "0000FF",
+		"title": "👤 | Статус: Свободен",
+		"description": "У пользователя {user_mention} нет партнера.",
+		"color": "5865F2",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
-	},
-	"user_house": {
-		"title": "🏠 Недвижимость: {display_name}",
-		"thumbnail": "{avatar_url}",
-		"fields": [
-			{ "name": "📍 Название", "value": "**{house_name}**", "inline": true },
-			{ "name": "🏷️ Класс", "value": "{group_name}", "inline": true },
-			{ "name": "💰 Цена", "value": "`{price}`", "inline": true },
-			{
-				"name": "⚙️ Параметры",
-				"value": "👥 Слоты: **{slots}**\n🙋‍♂️ Подселение: **{slots_tenant}**\n🔊 Битрейт: **{bitrate} kbps**",
-				"inline": false
-			},
-			{ "name": "📅 Куплено", "value": "<t:{bought_at}:D>", "inline": true }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
-	},
-	"user_house_tenant": {
-		"title": "🔑 Проживание: {display_name}",
-		"fields": [
-			{ "name": "🏠 Дом", "value": "**{house_name}**", "inline": true },
-			{ "name": "🏷️ Класс", "value": "{group_name}", "inline": true },
-			{ "name": "👑 Владелец", "value": "{owner_mention}", "inline": true },
-			{
-				"name": "💸 Аренда",
-				"value": "`{rent_price}` / сутки",
-				"inline": false
-			},
-			{ "name": "📅 Заселение", "value": "<t:{joined_at}:D>", "inline": false }
-		],
-		"color": "00FF00",
-		"timestamp": true,
-		"footer": { "text": "Estate System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Профиль", "icon_url": "{author_avatar}" }
 	},
 
 	"family_improvements_list": {
-		"title": "🏡 Улучшения семьи",
-		"description": "Уровень вашей семьи: **{level}**\nБюджет семьи: **{balance}**\n\nВыберите улучшение для покупки:",
-		"color": "0000FF",
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" },
-		"timetamp": true
+		"title": "🏡 | Семейный магазин",
+		"description": "Уровень семьи: **{level}**\nКазна: **{balance} $**\n\nВыберите улучшение из списка ниже:",
+		"color": "5865F2",
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" },
+		"timestamp": true
 	},
 	"family_improvement_success": {
-		"title": "✅ Улучшение куплено",
-		"description": "Вы успешно приобрели улучшение **{imp_name}**!",
-		"color": "00FF00",
+		"title": "✅ | Улучшение приобретено",
+		"description": "Вы купили **{imp_name}** для своей семьи!",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"family_biz_dashboard": {
-		"title": "🏩 Семейный бизнес: {biz_name}",
+		"title": "🏩 | Семейный бизнес: {biz_name}",
 		"description": "**Владельцы:** {owners}",
 		"fields": [
-			{ "name": "💰 Касса", "value": "`{balance}`", "inline": true },
+			{
+				"name": "💰 Касса",
+				"value": "```cs\n{balance} $\n```",
+				"inline": true
+			},
 			{
 				"name": "📦 Склад",
 				"value": "`{supplies}/{max_storage}`\n{storage_progress}",
 				"inline": true
 			},
 			{ "name": "📊 Статус", "value": "{status}", "inline": true },
-			{ "name": "🛠️ Улучшения", "value": "{upgrades}", "inline": false }
+			{ "name": "🛠️ Апгрейды", "value": "{upgrades}", "inline": false }
 		],
-		"color": "0000FF",
+		"color": "EB459E",
 		"timestamp": true,
-		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
-	},
-	"family_biz_withdraw": {
-		"title": "💰 Прибыль снята",
-		"timestamp": true,
-		"description": "Вы сняли **{amount}** в семейный бюджет.",
-		"color": "00FF00",
-		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Управление бизнесом", "icon_url": "{author_avatar}" }
 	},
 	"family_biz_buy_success": {
-		"title": "🤝 Бизнес приобретен",
-		"description": "Ваша семья купила **{biz_name}**!",
-		"fields": [{ "name": "Цена", "value": "`{price}`", "inline": true }],
-		"color": "00FF00",
+		"title": "🤝 | Расширение империи",
+		"description": "Ваша семья приобрела **{biz_name}**!",
+		"fields": [{ "name": "Цена", "value": "`{price} $`", "inline": true }],
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"error_no_family_improvement": {
-		"title": "❌ Нет улучшения",
-		"description": "Для этого действия требуется улучшение **{imp_name}**.\nИспользуйте `/семья улучшения` для покупки.",
-		"color": "FF0000",
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" },
-		"timestamp": true
+		"title": "🔒 | Требуется улучшение",
+		"description": "Для доступа к этой функции необходимо улучшение:\n✨ **{imp_name}**\n\nИспользуйте `/семья улучшения`, чтобы купить его.",
+		"color": "ED4245",
+		"timestamp": true,
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"error_family_biz_duplicate": {
-		"title": "❌ Ошибка покупки",
+		"title": "⚠️ | Уже во владении",
 		"description": "У вашей семьи уже есть бизнес **{biz_name}**.",
-		"color": "FF0000",
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "Social System", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 
 	"family_biz_sell_select": {
-		"title": "💸 Продажа семейных активов",
+		"title": "📉 | Продажа семейного бизнеса",
+		"description": "Выберите предприятие для продажи.\n⚠️ Выручка (**50%** от гос. цены) поступит в **семейный бюджет**.",
+		"color": "EB459E",
 		"timestamp": true,
-		"description": "Выберите бизнес для продажи.\n⚠️ Семья получит **50%** от гос. стоимости на семейный счет.",
-		"color": "0000FF",
-		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"family_biz_sell_confirm": {
-		"title": "⚠️ Продажа бизнеса",
-		"timestamp": true,
+		"title": "⚠️ | Подтверждение продажи",
 		"description": "Вы уверены, что хотите продать **{biz_name}**?",
 		"fields": [
-			{ "name": "💰 Выплата в бюджет", "value": "`{amount}`", "inline": true }
+			{
+				"name": "💰 В семейную казну",
+				"value": "**{amount} $**",
+				"inline": true
+			}
 		],
-		"color": "FF0000",
-		"footer": { "text": "System Bot", "icon_url": "{author_avatar}" }
+		"color": "FEE75C",
+		"timestamp": true,
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 	"family_biz_sell_success": {
-		"title": "✅ Бизнес продан",
-		"description": "Вы продали **{biz_name}**.",
+		"title": "✅ | Бизнес продан",
+		"description": "Вы успешно продали **{biz_name}**.",
 		"fields": [
-			{ "name": "➕ В бюджет семьи", "value": "`{amount}`", "inline": true }
+			{
+				"name": "➕ В бюджет семьи",
+				"value": "```cs\n+ {amount} $\n```",
+				"inline": true
+			}
 		],
-		"color": "00FF00",
+		"color": "2ECC71",
 		"timestamp": true,
-		"footer": { "text": "Family Business", "icon_url": "{author_avatar}" }
+		"footer": { "text": "Семья", "icon_url": "{author_avatar}" }
 	},
 
 	"admin_economy_report": {
-		"title": "📊 Экономическая Аналитика",
-		"description": "Глобальный срез финансового состояния сервера на {date}.",
-		"color": "2b2d31",
+		"title": "📊 | Экономический отчет",
+		"description": "Глобальный анализ экономики сервера на {date}.",
+		"color": "2B2D31",
 		"fields": [
 			{
 				"name": "💰 Денежная Масса (M1)",
@@ -1029,54 +1135,58 @@
 				"inline": false
 			},
 			{
-				"name": "⚖️ Социальное Неравенство",
+				"name": "⚖️ Индекс неравенства",
 				"value": "{inequality_stats}",
 				"inline": false
 			},
 			{
-				"name": "🏗️ Скрытая Ликвидность (Активы)",
+				"name": "🏗️ Рынок активов",
 				"value": "{assets_stats}",
 				"inline": true
 			}
 		],
+		"timestamp": true,
 		"footer": {
-			"text": "Совет системы: {recommendation}",
+			"text": "Аналитика: {recommendation}",
 			"icon_url": "{icon_url}"
-		},
-		"timestamp": true
+		}
 	},
 
 	"error_maintenance": {
-		"title": "🚧 Технические Работы",
-		"description": "В данный момент проводятся обновления.\nЭкономика временно недоступна во избежание ошибок.",
-		"color": "FFA500",
+		"title": "🚧 | Технические работы",
+		"description": "Экономическая система временно отключена для проведения обновлений.",
+		"color": "FEE75C",
 		"timestamp": true,
-		"footer": { "text": "System Bot", "icon_url": "{icon_url}" }
+		"footer": { "text": "System Maintenance", "icon_url": "{icon_url}" }
 	},
 	"maintenance_enabled": {
-		"title": "🚧 Режим Техработ ВКЛЮЧЕН",
-		"description": ">>> **Все экономические команды заблокированы для игроков.**\nАдминистраторы могут продолжать использовать бота.",
-		"color": "FFA500",
+		"title": "👷 | Режим техработ: ON",
+		"description": "```diff\n- Экономика отключена для игроков.\n+ Доступна только администраторам.\n```",
+		"color": "FEE75C",
 		"timestamp": true,
 		"footer": { "text": "System Maintenance", "icon_url": "{author_avatar}" }
 	},
 	"maintenance_disabled": {
-		"title": "✅ Режим Техработ ВЫКЛЮЧЕН",
-		"description": ">>> Бот снова доступен для всех игроков.",
-		"color": "00FF00",
+		"title": "✅ | Режим техработ: OFF",
+		"description": "```diff\n+ Экономика снова доступна для всех!\n```",
+		"color": "2ECC71",
 		"timestamp": true,
 		"footer": { "text": "System Maintenance", "icon_url": "{author_avatar}" }
 	},
 
 	"error_blacklisted": {
-		"title": "⛔ Доступ запрещен",
-		"description": "Вы находитесь в черном списке бота.\n\n**Причина:** {reason}\n**Дата блокировки:** {date}",
+		"title": "⛔ | Черный список",
+		"description": "Доступ к боту заблокирован.",
+		"fields": [
+			{ "name": "📄 Причина", "value": "{reason}", "inline": false },
+			{ "name": "📅 Дата блокировки", "value": "{date}", "inline": false }
+		],
 		"color": "000000",
 		"timestamp": true,
 		"footer": { "text": "Blacklist System", "icon_url": "{icon_url}" }
 	},
 	"blacklist_added": {
-		"title": "🛡️ Пользователь заблокирован",
+		"title": "🛡️ | Блокировка доступа",
 		"description": "Пользователь **{user}** внесен в черный список.",
 		"fields": [
 			{ "name": "🆔 ID", "value": "`{user_id}`", "inline": true },
@@ -1087,62 +1197,45 @@
 		"footer": { "text": "Moderator: {author}", "icon_url": "{author_avatar}" }
 	},
 	"blacklist_removed": {
-		"title": "🔓 Пользователь разблокирован",
+		"title": "🔓 | Восстановление доступа",
 		"description": "Пользователь **{user}** удален из черного списка.",
-		"color": "00FF00",
+		"color": "2ECC71",
 		"timestamp": true,
 		"footer": { "text": "Moderator: {author}", "icon_url": "{author_avatar}" }
 	},
-
 	"error_blacklist_not_found": {
-		"title": "❌ Ошибка",
+		"title": "🤷‍♂️ | Не найдено",
 		"description": "Пользователь **{user}** не находится в черном списке.",
-		"color": "FF0000",
+		"color": "5865F2",
 		"timestamp": true,
 		"footer": { "text": "Blacklist System", "icon_url": "{author_avatar}" }
 	},
 	"error_blacklist_invalid_target": {
-		"title": "❌ Ошибка",
-		"description": "Нельзя заблокировать этого пользователя (себя или бота).",
-		"color": "FF0000",
+		"title": "🛡️ | Иммунитет",
+		"description": "Этого пользователя невозможно добавить в ЧС.",
+		"color": "ED4245",
 		"timestamp": true,
 		"footer": { "text": "Blacklist System", "icon_url": "{author_avatar}" }
 	},
 
 	"log_blacklist_add": {
-		"title": "🛡️ ЧС | Пользователь заблокирован",
+		"title": "⚫ Лог: Добавление в ЧС",
 		"fields": [
-			{
-				"name": "👤 Пользователь",
-				"value": "{user}",
-				"inline": true
-			},
-			{
-				"name": "👮 Администратор",
-				"value": "{author}",
-				"inline": true
-			},
-			{ "name": "📄 Причина", "value": "```\n{reason}\n```", "inline": false }
+			{ "name": "Пользователь", "value": "{user}", "inline": true },
+			{ "name": "Админ", "value": "{author}", "inline": true },
+			{ "name": "Причина", "value": "```\n{reason}\n```", "inline": false }
 		],
 		"color": "000000",
 		"timestamp": true,
 		"footer": { "text": "Blacklist Logger", "icon_url": "{author_avatar}" }
 	},
 	"log_blacklist_remove": {
-		"title": "🔓 ЧС | Пользователь разблокирован",
+		"title": "⚪ Лог: Снятие ЧС",
 		"fields": [
-			{
-				"name": "👤 Пользователь",
-				"value": "{user}",
-				"inline": true
-			},
-			{
-				"name": "👮 Администратор",
-				"value": "{author}",
-				"inline": true
-			}
+			{ "name": "Пользователь", "value": "{user}", "inline": true },
+			{ "name": "Админ", "value": "{author}", "inline": true }
 		],
-		"color": "00FF00",
+		"color": "2B2D31",
 		"timestamp": true,
 		"footer": { "text": "Blacklist Logger", "icon_url": "{author_avatar}" }
 	}

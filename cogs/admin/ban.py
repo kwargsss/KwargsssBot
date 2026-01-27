@@ -30,46 +30,32 @@ class Ban(commands.Cog):
 
         if seconds == 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url))
 
         if seconds < 5:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url))
 
         role_ban = inter.guild.get_role(ROLE_BAN)
         if not role_ban:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Роль бана не настроена в конфиге.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_generic", text="Роль бана не настроена в конфиге.", author_avatar=inter.author.display_avatar.url))
 
         if member.id == self.bot.user.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url))
 
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url))
 
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url))
 
         if role_ban in member.roles:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Пользователь уже забанен.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_generic", text="Пользователь уже забанен.", author_avatar=inter.author.display_avatar.url))
 
         await member.add_roles(role_ban, reason=f"Забанил {inter.author}: {reason}")
 
@@ -89,7 +75,7 @@ class Ban(commands.Cog):
             time_str=time_str,
             expires_at=int(expires_at),
             reason=reason,
-            moderator_name=inter.author.display_name,
+            moderator_name=inter.author.mention,
             moderator_avatar=inter.author.display_avatar.url
         )
         await inter.edit_original_response(embed=embed)
@@ -121,9 +107,7 @@ class Ban(commands.Cog):
 
         if not active_ban and not has_role:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Этот пользователь не забанен.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
-            )
+                embed=embed_builder.get_embed("error_generic", text="Этот пользователь не забанен.", author_avatar=inter.author.display_avatar.url))
 
         if has_role:
             await member.remove_roles(role_ban, reason=f"Разбанил {inter.author}")

@@ -38,7 +38,7 @@ class Lock(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.edit_original_response(embed=embed,ephemeral=True)
+        await inter.edit_original_response(embed=embed )
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:
@@ -56,8 +56,7 @@ class Lock(commands.Cog):
         await inter.response.defer()
         if inter.channel.id in ADMIN_CHANNELS_LIST:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_admin_channel", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_admin_channel", author_avatar=inter.author.display_avatar.url) 
             )
 
         channel = inter.channel
@@ -66,8 +65,7 @@ class Lock(commands.Cog):
 
         if overwrite.send_messages is None or overwrite.send_messages is True:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Этот канал не заблокирован.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Этот канал не заблокирован.", author_avatar=inter.author.display_avatar.url) 
             )
 
         overwrite.send_messages = None
@@ -80,7 +78,7 @@ class Lock(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.edit_original_response(embed=embed,ephemeral=True)
+        await inter.edit_original_response(embed=embed )
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:

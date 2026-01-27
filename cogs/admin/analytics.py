@@ -85,20 +85,20 @@ class Analytics(commands.Cog):
         warnings = []
         
         if median_wealth < 200:
-            warnings.append("📉 **Нищета:** Новичкам сложно. Поднимите ЗП 1-го уровня.")
+            warnings.append("📉 Нищета: Новичкам сложно. Поднимите ЗП 1-го уровня.")
 
         if wealth_concentration > 60:
-            warnings.append("⚖️ **Олигархия:** Топ-1% держит >60% денег. Введите налог на богатых.")
+            warnings.append("⚖️ Олигархия: Топ-1% держит >60% денег. Введите налог на богатых.")
         elif wealth_concentration < 5:
-            warnings.append("☭ **Уравниловка:** Нет богатых игроков. Экономике не хватает стимулов.")
+            warnings.append("☭ Уравниловка: Нет богатых игроков. Экономике не хватает стимулов.")
 
         invest_ratio = (biz_value / money_supply) if money_supply > 0 else 0
         if invest_ratio < 0.1 and user_count > 5:
-            warnings.append("🏗️ **Застой:** Деньги копятся, а не тратятся. Сделайте скидки на бизнесы.")
+            warnings.append("🏗️ Застой: Деньги копятся, а не тратятся. Сделайте скидки на бизнесы.")
 
         family_ratio = (family_treasury / money_supply) if money_supply > 0 else 0
         if family_ratio < 0.05 and user_count > 10:
-             warnings.append("🏰 **Слабые семьи:** Казны пусты. Добавьте доход.")
+             warnings.append("🏰 Слабые семьи: Казны пусты. Добавьте доход.")
 
         if not warnings:
             recommendation = "✅ Экономика стабильна. Критических перекосов нет."

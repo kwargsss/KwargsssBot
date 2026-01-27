@@ -5,73 +5,73 @@
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/снять",
-            "time": "15:27",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/выдать",
-            "time": "15:27",
+            "command": "/мут",
+            "time": "16:05",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
             "command": "/снять",
-            "time": "15:27",
+            "time": "16:04",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
             "command": "/выдать",
-            "time": "15:26",
+            "time": "16:04",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
             "command": "/снять",
-            "time": "15:26",
+            "time": "16:04",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/выдать",
-            "time": "15:25",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/выдать",
-            "time": "15:22",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/выдать",
-            "time": "15:21",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "chat",
             "command": "/снять",
-            "time": "15:19",
+            "time": "16:02",
             "status": true
         },
         {
             "user": ".kwargsss",
-            "channel": "chat",
-            "command": "/снять",
-            "time": "15:18",
+            "channel": "test",
+            "command": "/выдать",
+            "time": "16:00",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "embed-debuger",
+            "command": "/debug_embeds",
+            "time": "15:56",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "test",
+            "command": "/экономика",
+            "time": "15:54",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "test",
+            "command": "/reload",
+            "time": "15:54",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "test",
+            "command": "/reload",
+            "time": "15:54",
             "status": true
         }
     ],
-    "commands_today": 44
+    "commands_today": 56
 }
