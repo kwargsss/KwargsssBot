@@ -5,7 +5,7 @@ import asyncio
 from config import ECO_CFG
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import prison_check, maintenance_check
+from utils.decorators import prison_check, maintenance_check, blacklist_check
 
 
 embed_builder = EmbedBuilder()
@@ -153,21 +153,21 @@ class Casino(commands.Cog):
         money = user_db['money']
         
         if amount < self.cfg.get("min_bet", 10):
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"Минимальная ставка: {format_money(self.cfg.get('min_bet', 10))}", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
             return False
             
         if amount > self.cfg.get("max_bet", 1000000):
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"Максимальная ставка: {format_money(self.cfg.get('max_bet', 1000000))}", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
             return False
 
         if money < amount:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=format_money(money), needed=amount, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -176,23 +176,23 @@ class Casino(commands.Cog):
         return True
 
     @commands.slash_command(name="казино", description="Играть в азартные игры")
+    @blacklist_check()
     @maintenance_check()
     @prison_check()
     async def casino(self, inter):
+        await inter.response.defer()
         pass
 
     @casino.sub_command(name="слоты", description="Крутить барабан")
-    @maintenance_check()
-    @prison_check()
     async def slots(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
+        await inter.response.defer()
         if not await self.check_balance(inter, bet): return
 
         await self.bot.db.update_money(inter.author, -bet, 0)
         
         symbols = self.cfg["slots"]["symbols"]
         row = [random.choice(symbols) for _ in range(3)]
-        
-        # Using a simple embed for spinning state instead of plain text
+
         await inter.response.send_message(
             embed=disnake.Embed(description=f"🎰 | {symbols[0]} {symbols[1]} {symbols[2]} | ...крутим...", color=disnake.Color.blurple())
         )
@@ -235,9 +235,8 @@ class Casino(commands.Cog):
         await inter.edit_original_message(content=None, embed=embed)
 
     @casino.sub_command(name="кости", description="Бросить кубики")
-    @maintenance_check()
-    @prison_check()
     async def dice(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
+        await inter.response.defer()
         if not await self.check_balance(inter, bet): return
 
         await self.bot.db.update_money(inter.author, -bet, 0)
@@ -259,12 +258,11 @@ class Casino(commands.Cog):
             await self.bot.db.update_money(inter.author, bet, 0)
             embed = disnake.Embed(title="🤝 Ничья", description=f"{desc}\n\n💰 Ставка возвращена.", color=disnake.Color.yellow())
             
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @casino.sub_command(name="блэкджек", description="Карточная игра 21")
-    @maintenance_check()
-    @prison_check()
     async def blackjack(self, inter, bet: int = commands.Param(name="ставка", gt=0)):
+        await inter.response.defer()
         if not await self.check_balance(inter, bet): return
 
         await self.bot.db.update_money(inter.author, -bet, 0)
@@ -286,7 +284,7 @@ class Casino(commands.Cog):
                 author_avatar=inter.author.display_avatar.url
             )
             embed.description = f"**Ваши карты:** {view.format_hand(view.player_hand)}\n\n" + embed.description
-            return await inter.send(embed=embed)
+            return await inter.edit_original_response(embed=embed)
 
         embed = embed_builder.get_embed(
             "casino_blackjack_game",
@@ -298,7 +296,7 @@ class Casino(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
         
-        await inter.send(embed=embed, view=view)
+        await inter.edit_original_response(embed=embed, view=view)
 
 def setup(bot):
     bot.add_cog(Casino(bot))

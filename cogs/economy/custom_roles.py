@@ -3,7 +3,7 @@ import disnake
 from disnake.ext import commands
 from config import *
 from utils.embeds import EmbedBuilder
-from utils.decorators import maintenance_check, prison_check
+from utils.decorators import maintenance_check, prison_check, blacklist_check
 
 
 embed_builder = EmbedBuilder()
@@ -23,7 +23,7 @@ class RoleApprovalView(disnake.ui.View):
         member = guild.get_member(self.author_id)
         
         if not member:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -35,7 +35,7 @@ class RoleApprovalView(disnake.ui.View):
 
         balance = await self.bot.db.get_balance(member, "money")
         if balance < self.price:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=balance, needed=self.price, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -77,18 +77,18 @@ class RoleApprovalView(disnake.ui.View):
             
             await inter.message.edit(embed=embed, view=None)
             
-            await inter.send(
+            await inter.edit_original_response(
                 embed=disnake.Embed(description="✅ Роль создана и выдана.", color=disnake.Color.green()),
                 ephemeral=True
             )
 
         except disnake.Forbidden:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Ошибка: У бота нет прав на создание/выдачу ролей.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         except Exception as e:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"Произошла ошибка: {e}", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -121,7 +121,7 @@ class RoleApprovalView(disnake.ui.View):
         
         await inter.message.edit(embed=embed, view=None)
 
-        await inter.send(
+        await inter.edit_original_response(
             embed=disnake.Embed(description="⛔ Заявка отклонена.", color=disnake.Color.red()),
             ephemeral=True
         )
@@ -133,41 +133,42 @@ class CustomRoles(commands.Cog):
         self.role_price = ECO_CFG["global"].get("custom_role_price", 1000000)
 
     @commands.slash_command(name="роль", description="Управление личными ролями")
-    @prison_check()
+    @blacklist_check()
     @maintenance_check()
+    @prison_check()
     async def role(self, inter):
+        await inter.response.defer()
         pass
 
     @role.sub_command(name="купить", description="Купить личную роль")
-    @prison_check()
-    @maintenance_check()
     async def buy(
         self, 
         inter, 
         name: str = commands.Param(name="название", description="Название роли"), 
         color: str = commands.Param(name="цвет", description="HEX цвет (например: #ff0000)")
     ):
+        await inter.response.defer()
         if not color.startswith("#"):
             color = "#" + color
         
         try:
             int(color.replace("#", ""), 16)
         except ValueError:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Неверный формат цвета. Используйте HEX (например: #ff0000)", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         balance = await self.bot.db.get_balance(inter.author, "money")
         if balance < self.role_price:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=balance, needed=self.role_price, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         log_channel = self.bot.get_channel(LOG_ECONOMY)
         if not log_channel:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Ошибка: Канал логов экономики не настроен.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -186,7 +187,7 @@ class CustomRoles(commands.Cog):
         view = RoleApprovalView(self.bot, inter.author.id, name, color, self.role_price)
         await log_channel.send(embed=embed_log, view=view)
 
-        await inter.send(
+        await inter.edit_original_response(
             embed=disnake.Embed(description="✅ Ваша заявка отправлена администрации на проверку.", color=disnake.Color.green()),
             ephemeral=True
         )

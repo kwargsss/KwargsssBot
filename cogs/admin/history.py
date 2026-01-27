@@ -28,7 +28,7 @@ class HistorySelect(disnake.ui.StringSelect):
 
     async def callback(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -111,7 +111,7 @@ class HistoryCommand(commands.Cog):
 
         view = HistoryView(self.bot, member, inter.author)
         
-        await inter.send(embed=embed, view=view)
+        await inter.edit_original_response(embed=embed, view=view)
 
 def setup(bot):
     bot.add_cog(HistoryCommand(bot))

@@ -1,6 +1,6 @@
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check, maintenance_check
+from utils.decorators import prison_check, maintenance_check, blacklist_check
 from utils.commission import commission_manager
 
 
@@ -11,21 +11,22 @@ class BankSystem(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="банк", description="Снять или положить деньги")
+    @blacklist_check()
     @maintenance_check()
     @prison_check()
     async def bank(self, inter):
+        await inter.response.defer()
         pass
 
     @bank.sub_command(name="положить", description="Положить деньги в банк")
-    @maintenance_check()
-    @prison_check()
     async def deposit(
         self, 
         inter, 
         amount: int = commands.Param(name="сумма", description="Сколько положить")
     ):
+        await inter.response.defer()
         if amount <= 0:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -37,7 +38,7 @@ class BankSystem(commands.Cog):
 
         cash = user_data['money']
         if cash < amount:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=cash, needed=amount, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -54,17 +55,17 @@ class BankSystem(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url    
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @bank.sub_command(name="снять", description="Снять деньги с банка")
-    @maintenance_check()
     async def withdraw(
         self, 
         inter, 
         amount: int = commands.Param(name="сумма", description="Сколько снять")
     ):
+        await inter.response.defer()
         if amount <= 0:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -76,7 +77,7 @@ class BankSystem(commands.Cog):
 
         bank_balance = user_data['bank']
         if bank_balance < amount:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=bank_balance, needed=amount, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -97,7 +98,7 @@ class BankSystem(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url    
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
 def setup(bot):
     bot.add_cog(BankSystem(bot))

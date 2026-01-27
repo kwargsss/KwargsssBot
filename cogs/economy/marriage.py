@@ -6,7 +6,7 @@ from config import *
 from config import WEDDING_PRICE, ECO_CFG
 from disnake.ext import commands, tasks
 from utils.embeds import EmbedBuilder, format_money
-from utils.decorators import custom_cooldown, maintenance_check, prison_check
+from utils.decorators import custom_cooldown, maintenance_check, prison_check, blacklist_check
 from utils.commission import commission_manager 
 
 
@@ -54,7 +54,7 @@ class ImprovementsView(disnake.ui.View):
             m = await self.bot.db.get_marriage(self.author_id)
             if m['balance'] < info['price']:
                 embed = embed_builder.get_embed("error_no_money_details", balance=m['balance'], needed=info['price'], author_avatar=inter.author.display_avatar.url)
-                return await inter.send(embed=embed, ephemeral=True)
+                return await inter.edit_original_response(embed=embed, ephemeral=True)
                 
             await self.bot.db.update_family_balance(m['id'], -info['price'])
             await self.bot.db.add_family_improvement(m['id'], key)
@@ -111,7 +111,7 @@ class FamilyBizDashboardView(disnake.ui.View):
         balance = current['balance']
         
         if balance <= 0:
-            return await inter.send(embed=embed_builder.get_embed("error_generic", text="Касса пуста.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_generic", text="Касса пуста.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
 
         offshore_lvl = self.biz_data.get('offshore_lvl', 0)
         evasion_per_lvl = BIZ_CFG['upgrades'].get('offshore', {}).get('tax_evasion', 0.0)
@@ -123,7 +123,7 @@ class FamilyBizDashboardView(disnake.ui.View):
         await self.bot.db.update_family_balance(self.marriage_id, net_profit)
 
         await render_family_biz_dashboard(self.bot, inter, self.index, edit=True)
-        await inter.send(f"✅ В семейный бюджет зачислено: **{format_money(net_profit)}**", ephemeral=True)
+        await inter.edit_original_response(f"✅ В семейный бюджет зачислено: **{format_money(net_profit)}**", ephemeral=True)
 
 class FamilySuppliesModal(disnake.ui.Modal):
     def __init__(self, bot, biz_data, index):
@@ -146,7 +146,7 @@ class FamilySuppliesModal(disnake.ui.Modal):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         
         if marriage['balance'] < cost:
-            return await inter.send(f"В семье недостаточно денег! Нужно: {cost}", ephemeral=True)
+            return await inter.edit_original_response(f"В семье недостаточно денег! Нужно: {cost}", ephemeral=True)
             
         type_info = FAM_CFG['businesses'][self.biz_data['type']]
         log_bonus = self.biz_data.get('logistics_lvl', 0) * BIZ_CFG['upgrades']['logistics']['add_storage']
@@ -154,7 +154,7 @@ class FamilySuppliesModal(disnake.ui.Modal):
         free = max_storage - self.biz_data['supplies']
 
         if self.biz_data['supplies'] + amount > max_storage:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"Склад переполнен! Свободно мест: {free}", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -201,7 +201,7 @@ class FamilyBizSellSelect(disnake.ui.StringSelect):
         biz_data = self.businesses_map.get(biz_id)
         
         if not biz_data:
-            return await inter.send(embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url), ephemeral=True)
             
         info = FAM_CFG['businesses'].get(biz_data['type'])
         sell_price = int(info['cost'] * self.sell_ratio)    
@@ -254,7 +254,7 @@ class FamilyUpgradeView(disnake.ui.View):
                 final_cost = int(base_cost * (1 - discount))
             
             if marriage['balance'] < final_cost:
-                return await inter.send(f"В семье мало денег! Нужно: {final_cost}", ephemeral=True)
+                return await inter.edit_original_response(f"В семье мало денег! Нужно: {final_cost}", ephemeral=True)
                 
             await self.bot.db.update_family_balance(self.marriage_id, -final_cost)
             await self.bot.db.upgrade_family_biz(self.biz_data['id'], f"{key}_lvl")
@@ -281,7 +281,7 @@ class FamilyBizSellConfirmView(disnake.ui.View):
 
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.user_id:
-            await inter.send(embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            await inter.edit_original_response(embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url), ephemeral=True)
             return False
         return True
 
@@ -289,7 +289,7 @@ class FamilyBizSellConfirmView(disnake.ui.View):
     async def confirm(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         exists = await self.bot.db.get_family_business(self.biz_data['id'])
         if not exists:
-            return await inter.send(embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url), ephemeral=True)
 
         await self.bot.db.delete_family_business(self.biz_data['id'])
         await self.bot.db.update_family_balance(self.marriage_id, self.sell_price)
@@ -314,14 +314,14 @@ async def render_family_biz_dashboard(bot, inter, index=0, edit=False):
     marriage = await bot.db.get_marriage(inter.author.id)
     if not marriage: 
         if not edit:
-            return await inter.send(embed=embed_builder.get_embed("error_generic", text="У вас нет семьи.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_generic", text="У вас нет семьи.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
         return
     
     businesses = await bot.db.get_family_businesses(marriage['id'])
     if not businesses:
         embed = embed_builder.get_embed("error_generic", text="У вашей семьи нет бизнесов.", author_avatar=inter.author.display_avatar.url)
         if edit: return 
-        return await inter.send(embed=embed, ephemeral=True)
+        return await inter.edit_original_response(embed=embed, ephemeral=True)
         
     if index >= len(businesses): index = 0
     if index < 0: index = len(businesses) - 1
@@ -362,7 +362,7 @@ async def render_family_biz_dashboard(bot, inter, index=0, edit=False):
     if edit:
         await inter.response.edit_message(embed=embed, view=view)
     else:
-        await inter.send(embed=embed, view=view)
+        await inter.edit_original_response(embed=embed, view=view)
 
 class ProposalView(disnake.ui.View):
     def __init__(self, bot, author, target):
@@ -374,7 +374,7 @@ class ProposalView(disnake.ui.View):
 
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.target.id:
-            await inter.send(
+            await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -419,48 +419,50 @@ class Marriage(commands.Cog):
         self.fam_biz_loop.cancel()
 
     @commands.slash_command(name="семья", description="Семейные команды")
-    @prison_check()
+    @blacklist_check()
     @maintenance_check()
+    @prison_check()
     async def family(self, inter):
+        await inter.response.defer()
         pass
 
     @family.sub_command(name="свадьба", description=f"Предложить руку и сердце (Цена: {WEDDING_PRICE})")
-    @prison_check()
-    @maintenance_check()
     async def marry(
         self, 
         inter, 
         member: disnake.Member = commands.Param(name="партнер", description="Выберите свою половинку")
     ):
+        await inter.response.defer()
+
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         
         if member.bot:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         balance = await self.bot.db.get_balance(inter.author, "money")
         if balance < WEDDING_PRICE:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=balance, needed=WEDDING_PRICE, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         m_author = await self.bot.db.get_marriage(inter.author.id)
         if m_author:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Вы уже состоите в браке!", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         
         m_target = await self.bot.db.get_marriage(member.id)
         if m_target:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"{member.display_name} уже в браке!", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -477,12 +479,11 @@ class Marriage(commands.Cog):
         await inter.response.send_message(content=member.mention, embed=embed, view=view)
 
     @family.sub_command(name="развод", description="Расторгнуть брак")
-    @prison_check()
-    @maintenance_check()
     async def divorce(self, inter):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Вы не состоите в браке.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -512,16 +513,15 @@ class Marriage(commands.Cog):
             share=share,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @family.sub_command(name="профиль", description="Посмотреть профиль семьи")
-    @prison_check()
-    @maintenance_check()
     async def profile(self, inter):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
             embed = embed_builder.get_embed("info_no_family", user_mention=inter.author.mention, author_avatar=inter.author.display_avatar.url)
-            return await inter.send(embed=embed)
+            return await inter.edit_original_response(embed=embed)
 
         imps_raw = marriage.get('improvements', '')
         imps_list = imps_raw.split(',') if imps_raw else []
@@ -550,15 +550,14 @@ class Marriage(commands.Cog):
         )
         embed.add_field(name="🌟 Улучшения", value=imps_str, inline=False)
         embed.add_field(name="💼 Семейный бизнес", value=biz_str, inline=False)
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @family.sub_command(name="улучшения", description="Магазин улучшений семьи")
-    @prison_check()
-    @maintenance_check()
     async def improvements(self, inter):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage: 
-            return await inter.send(embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
         
         embed = embed_builder.get_embed(
             "family_improvements_list",
@@ -567,11 +566,9 @@ class Marriage(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
         view = ImprovementsView(self.bot, inter.author.id, marriage)
-        await inter.send(embed=embed, view=view)
+        await inter.edit_original_response(embed=embed, view=view)
 
     @family.sub_command(name="пополнить", description="Пополнить семейный бюджет")
-    @prison_check()
-    @maintenance_check()
     async def deposit(
         self, 
         inter, 
@@ -579,14 +576,14 @@ class Marriage(commands.Cog):
     ):
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         user_money = await self.bot.db.get_balance(inter.author, "money")
         if user_money < amount:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=user_money, needed=amount, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -603,25 +600,24 @@ class Marriage(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
         
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @family.sub_command(name="снять", description="Снять деньги из семейного бюджета")
-    @prison_check()
-    @maintenance_check()
     async def withdraw(
         self, 
         inter, 
         amount: int = commands.Param(name="сумма", description="Сумма снятия", gt=0)
     ):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if marriage['balance'] < amount:
-             return await inter.send(
+             return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_no_money_details", balance=marriage['balance'], needed=amount, author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -641,17 +637,14 @@ class Marriage(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
         
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @family.sub_command_group(name="бизнес", description="Управление семейным бизнесом")
-    @prison_check()
-    @maintenance_check()
     async def family_biz(self, inter):
+        await inter.response.defer()
         pass
 
     @family_biz.sub_command(name="продать", description="Продать семейный бизнес")
-    @prison_check()
-    @maintenance_check()
     async def fb_sell(self, inter):
         await inter.response.defer(ephemeral=True)
 
@@ -696,23 +689,22 @@ class Marriage(commands.Cog):
         await inter.edit_original_response(embed=embed, view=view)
 
     @family_biz.sub_command(name="купить", description="Купить семейный бизнес")
-    @prison_check()
-    @maintenance_check()
     async def fb_buy(self, inter, biz_type: str = commands.Param(name="тип", description="Выберите бизнес", choices={"🍷 Винодельня": "family_winery", "🏨 Отель": "family_hotel"})):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage: 
-            return await inter.send(embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_generic", text="Вы не в браке.", author_avatar=inter.author.display_avatar.url), ephemeral=True)
 
         imps = marriage.get('improvements', '').split(',')
         if "family_business" not in imps:
-            return await inter.send(embed=embed_builder.get_embed("error_no_family_improvement", imp_name="Семейный бизнес", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_no_family_improvement", imp_name="Семейный бизнес", author_avatar=inter.author.display_avatar.url), ephemeral=True)
 
         current_biz = await self.bot.db.get_family_businesses(marriage['id'])
 
         for b in current_biz:
             if b['type'] == biz_type:
                 info = FAM_CFG['businesses'][biz_type]
-                return await inter.send(
+                return await inter.edit_original_response(
                     embed=embed_builder.get_embed(
                         "error_family_biz_duplicate", 
                         biz_name=info['name'], 
@@ -722,7 +714,7 @@ class Marriage(commands.Cog):
                 )
 
         if len(current_biz) >= 2:
-            return await inter.send(embed=embed_builder.get_embed("error_generic", text="Максимум 2 семейных бизнеса!", author_avatar=inter.author.display_avatar.url), ephemeral=True)
+            return await inter.edit_original_response(embed=embed_builder.get_embed("error_generic", text="Максимум 2 семейных бизнеса!", author_avatar=inter.author.display_avatar.url), ephemeral=True)
 
         info = FAM_CFG['businesses'][biz_type]
         cost = info['cost']
@@ -732,28 +724,26 @@ class Marriage(commands.Cog):
             cost = int(cost * (1 - discount))
 
         if marriage['balance'] < cost:
-            return await inter.send(f"В семье недостаточно денег! Цена: {format_money(cost)}", ephemeral=True)
+            return await inter.edit_original_response(f"В семье недостаточно денег! Цена: {format_money(cost)}", ephemeral=True)
 
         await self.bot.db.update_family_balance(marriage['id'], -cost)
         await self.bot.db.create_family_business(marriage['id'], biz_type)
         
         embed = embed_builder.get_embed("family_biz_buy_success", biz_name=info['name'], price=format_money(cost), author_avatar=inter.author.display_avatar.url)
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @family_biz.sub_command(name="инфо", description="Управление семейными бизнесами")
-    @prison_check()
-    @maintenance_check()
     async def fb_info(self, inter):
+        await inter.response.defer()
         await render_family_biz_dashboard(self.bot, inter)
 
     @family.sub_command(name="любовь", description="Отправить любовь партнеру")
-    @prison_check()
-    @maintenance_check()
     @custom_cooldown("love")
     async def love(self, inter):
+        await inter.response.defer()
         marriage = await self.bot.db.get_marriage(inter.author.id)
         if not marriage:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Вам некому дарить любовь :(", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -770,7 +760,7 @@ class Marriage(commands.Cog):
             level=updated_marriage['level'],
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
     @tasks.loop(seconds=TICK_TIME)
     async def fam_biz_loop(self):

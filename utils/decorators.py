@@ -86,3 +86,33 @@ def maintenance_check():
         
         return wrapper
     return decorator
+
+def blacklist_check():
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(self, inter, *args, **kwargs):
+            is_admin = any(role.id in ADMIN_ROLE_IDS for role in inter.author.roles)
+
+            if is_admin:
+                return await func(self, inter, *args, **kwargs)
+
+            ban_entry = await self.bot.db.check_blacklist(inter.author.id)
+
+            if ban_entry:
+                ban_date = f"<t:{ban_entry['date']}:D>"
+                
+                embed = embed_builder.get_embed(
+                    name="error_blacklisted",
+                    reason=ban_entry['reason'],
+                    date=ban_date,
+                    icon_url=self.bot.user.display_avatar.url
+                )
+                
+
+                await inter.send(embed=embed, ephemeral=True)
+                return
+
+            await func(self, inter, *args, **kwargs)
+        
+        return wrapper
+    return decorator

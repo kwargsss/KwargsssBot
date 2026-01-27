@@ -1,6 +1,6 @@
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check, maintenance_check
+from utils.decorators import prison_check, maintenance_check, blacklist_check
 
 
 embed_builder = EmbedBuilder()
@@ -10,8 +10,9 @@ class Transactions(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="транзакции", description="История ваших переводов")
-    @prison_check()
+    @blacklist_check()
     @maintenance_check()
+    @prison_check()
     async def transactions(self, inter):
         await inter.response.defer()
 
@@ -47,7 +48,7 @@ class Transactions(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
 def setup(bot):
     bot.add_cog(Transactions(bot))

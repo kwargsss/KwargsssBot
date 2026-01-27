@@ -15,6 +15,7 @@ class Mute(commands.Cog):
 
     @commands.slash_command(name="мут", description="Замутить или размутить пользователя на время")
     async def mute(self, inter):
+        await inter.response.defer()
         pass
 
     @mute.sub_command(name="выдать", description="Замутить пользователя на время")
@@ -25,45 +26,46 @@ class Mute(commands.Cog):
         time_str: str = commands.Param(name="время", description="Например: 1ч 30мин"),
         reason: str = commands.Param(name="причина", description="Укажите причину", default="Нарушение правил")
     ):
+        await inter.response.defer()
         if member.id == self.bot.user.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         seconds = parse_time(time_str)
         if seconds == 0:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         if seconds < 5:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         role_mute = inter.guild.get_role(ROLE_MUTE)
         if not role_mute:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Роль Mute не настроена в конфиге.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if role_mute in member.roles:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Пользователь уже в мьюте.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -89,7 +91,7 @@ class Mute(commands.Cog):
             moderator_avatar=inter.author.display_avatar.url,
             moderator_mention=inter.author.mention,
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:
@@ -111,13 +113,14 @@ class Mute(commands.Cog):
         inter, 
         member: disnake.Member = commands.Param(name="пользователь", description="Выберите пользователя")
     ):
+        await inter.response.defer()
         role_mute = inter.guild.get_role(ROLE_MUTE)
         
         active_mute = await self.bot.db.get_active_mute(member.id)
         has_role = role_mute and role_mute in member.roles
 
         if not active_mute and not has_role:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Этот Пользователь не в мьюте.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -135,7 +138,7 @@ class Mute(commands.Cog):
             moderator_avatar=inter.author.display_avatar.url,
             moderator_mention=inter.author.mention,
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:

@@ -45,7 +45,6 @@ class Analytics(commands.Cog):
         return total_value, biz_count
 
     @commands.slash_command(name="экономика", description="Глобальная аналитика экономики сервера")
-    @commands.has_permissions(administrator=True)
     async def sim_economy(self, inter: disnake.ApplicationCommandInteraction):
         await inter.response.defer()
 

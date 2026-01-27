@@ -1,7 +1,7 @@
 import random
 
 from config import ECO_CFG
-from utils.decorators import custom_cooldown, prison_check, maintenance_check
+from utils.decorators import custom_cooldown, prison_check, maintenance_check, blacklist_check
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder, format_money
 
@@ -15,18 +15,12 @@ class Work(commands.Cog):
         self.jobs_data = self.work_cfg.get("jobs", {"1": {"name": "Дворник", "phrases": ["Работа"]}})
 
     @commands.slash_command(name="работа", description="Поработать и получить деньги и опыт")
-    @prison_check()
+    @blacklist_check()
     @maintenance_check()
+    @prison_check()
     @custom_cooldown("work")
     async def work(self, inter):
-        remaining = await self.bot.db.get_remaining_cooldown(inter.author.id, "work")
-        if remaining > 0:
-            minutes = int(remaining // 60)
-            seconds = int(remaining % 60)
-            return await inter.send(
-                embed=embed_builder.get_embed("error_cooldown", time=f"{minutes} мин {seconds} сек"), 
-                ephemeral=True
-            )
+        await inter.response.defer()
 
         user_db = await self.bot.db.get_user(inter.author)
         if not user_db:
@@ -97,7 +91,7 @@ class Work(commands.Cog):
                     inline=False
                 )
 
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
 def setup(bot):
     bot.add_cog(Work(bot))

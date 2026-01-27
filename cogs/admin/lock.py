@@ -11,8 +11,9 @@ class Lock(commands.Cog):
 
     @commands.slash_command(name="закрыть", description="Закрыть канал для сообщений")
     async def lock(self, inter):
+        await inter.response.defer()
         if inter.channel.id in ADMIN_CHANNELS_LIST:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_admin_channel", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -22,7 +23,7 @@ class Lock(commands.Cog):
         overwrite = channel.overwrites_for(inter.guild.default_role)
 
         if overwrite.send_messages is False:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Этот канал уже заблокирован.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -37,7 +38,7 @@ class Lock(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed,ephemeral=True)
+        await inter.edit_original_response(embed=embed,ephemeral=True)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:
@@ -52,8 +53,9 @@ class Lock(commands.Cog):
 
     @commands.slash_command(name="открыть", description="Разрешить писать в текущем канале")
     async def unlock(self, inter):
+        await inter.response.defer()
         if inter.channel.id in ADMIN_CHANNELS_LIST:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_admin_channel", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -63,7 +65,7 @@ class Lock(commands.Cog):
         overwrite = channel.overwrites_for(inter.guild.default_role)
 
         if overwrite.send_messages is None or overwrite.send_messages is True:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Этот канал не заблокирован.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -78,7 +80,7 @@ class Lock(commands.Cog):
             author_name=inter.author.display_name,
             author_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed,ephemeral=True)
+        await inter.edit_original_response(embed=embed,ephemeral=True)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:

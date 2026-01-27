@@ -3,7 +3,7 @@ import config
 
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check, maintenance_check
+from utils.decorators import prison_check, maintenance_check, blacklist_check
 from utils.commission import commission_manager
 
 
@@ -14,8 +14,9 @@ class PaySystem(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="передать", description="Перевести деньги другому пользователю")
-    @prison_check()
+    @blacklist_check()
     @maintenance_check()
+    @prison_check()
     async def pay(
         self, 
         inter, 
@@ -24,21 +25,22 @@ class PaySystem(commands.Cog):
         target: str = commands.Param(name="куда", description="Счет зачисления", choices={"Наличные": "money", "Банк": "bank"}),
         amount: int = commands.Param(name="сумма", description="Сумма перевода")
     ):
+        await inter.response.defer()
 
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if member.bot:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if amount <= 0:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -56,7 +58,7 @@ class PaySystem(commands.Cog):
         
         if current_balance < amount:
             account_name = "Наличных" if source == "money" else "В Банке"
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed(
                     "error_no_money_details", 
                     balance=f"{current_balance} ({account_name})", 
@@ -102,7 +104,7 @@ class PaySystem(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
 
-        await inter.send(embed=embed_success)
+        await inter.edit_original_response(embed=embed_success)
 
         log_channel = inter.guild.get_channel(config.LOG_ECONOMY)
         if log_channel:

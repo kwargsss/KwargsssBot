@@ -3,7 +3,7 @@ import random
 
 from disnake.ext import commands
 from utils.embeds import EmbedBuilder
-from utils.decorators import prison_check, maintenance_check
+from utils.decorators import prison_check, maintenance_check, blacklist_check
 
 
 embed_builder = EmbedBuilder()
@@ -21,11 +21,12 @@ class Crime(commands.Cog):
                 author_name=inter.author.display_name,
                 author_avatar=inter.author.display_avatar.url
             )
-            await inter.send(embed=embed)
+            await inter.edit_original_response(embed=embed)
             return True
         return False
 
     @commands.slash_command(name="ограбить", description="Попытаться ограбить пользователя")
+    @blacklist_check()
     @maintenance_check()
     @prison_check()
     async def crime(
@@ -33,18 +34,18 @@ class Crime(commands.Cog):
         inter, 
         member: disnake.Member = commands.Param(name="жертва", description="Кого грабим?")
     ):
-
+        await inter.response.defer()
         if await self.check_if_jailed(inter):
             return
 
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         
         if member.bot:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -53,7 +54,7 @@ class Crime(commands.Cog):
         target_data = await self.bot.db.get_user(member)
 
         if not target_data or target_data['money'] < 50:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"У {member.display_name} слишком мало налички.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -88,7 +89,7 @@ class Crime(commands.Cog):
             if security_level > 0:
                 embed.description += f"\n🥷 Вы обошли охрану уровня **{security_level}**!"
             
-            await inter.send(embed=embed)
+            await inter.edit_original_response(embed=embed)
 
         else:      
             fine = 500
@@ -119,7 +120,7 @@ class Crime(commands.Cog):
 
             embed.description += f"\n\n🛑 **Причина:** {reason}"
 
-            await inter.send(embed=embed)
+            await inter.edit_original_response(embed=embed)
 
 def setup(bot):
     bot.add_cog(Crime(bot))

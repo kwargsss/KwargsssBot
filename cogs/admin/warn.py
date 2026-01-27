@@ -22,19 +22,20 @@ class WarnSystem(commands.Cog):
         member: disnake.Member = commands.Param(name="пользователь", description="Выберите пользователя"), 
         reason: str = commands.Param(name="причина",description="Укажите причину", default="Нарушение правил")
     ):
+        await inter.response.defer()
         if member.id == self.bot.user.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
         
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -52,7 +53,7 @@ class WarnSystem(commands.Cog):
             moderator_avatar=inter.author.display_avatar.url,
             moderator_mention=inter.author.mention,
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:
@@ -74,10 +75,11 @@ class WarnSystem(commands.Cog):
         inter, 
         member: disnake.Member = commands.Param(name="пользователь", description="Выберите пользователя"), 
     ):
+        await inter.response.defer()
         removed = await self.bot.db.remove_last_warn(member.id)
         
         if not removed:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text=f"У пользователя {member.mention} нет активных предупреждений.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -92,7 +94,7 @@ class WarnSystem(commands.Cog):
             moderator_avatar=inter.author.display_avatar.url,
             moderator_mention=inter.author.mention,
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:

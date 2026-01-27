@@ -12,6 +12,7 @@ class Maintenance(commands.Cog):
     @commands.slash_command(name="обслуживание", description="Управление режимом техработ")
     async def maintenance(self, inter: disnake.ApplicationCommandInteraction, state: str = commands.Param(name="режим", description="Режим экономики",choices=["Включить", "Выключить"])):
         
+        await inter.response.defer()
         enable = (state == "Включить")
 
         await self.bot.db.set_maintenance(enable)
@@ -23,7 +24,7 @@ class Maintenance(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
             
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
 def setup(bot):
     bot.add_cog(Maintenance(bot))

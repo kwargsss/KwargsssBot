@@ -25,47 +25,48 @@ class Ban(commands.Cog):
         time_str: str = commands.Param(name="время", description="Например: 1ч 30мин"),
         reason: str = commands.Param(name="причина", description="Укажите причину", default="Нарушение правил")
     ):
+        await inter.response.defer()
         seconds = parse_time(time_str)
 
         if seconds == 0:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if seconds < 5:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         role_ban = inter.guild.get_role(ROLE_BAN)
         if not role_ban:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Роль бана не настроена в конфиге.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if member.id == self.bot.user.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if member.id == inter.author.id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
 
         if role_ban in member.roles:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Пользователь уже забанен.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -91,7 +92,7 @@ class Ban(commands.Cog):
             moderator_name=inter.author.display_name,
             moderator_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:
@@ -112,13 +113,14 @@ class Ban(commands.Cog):
         inter, 
         member: disnake.Member = commands.Param(name="пользователь", description="Выберите пользователя")
     ):
+        await inter.response.defer()
         role_ban = inter.guild.get_role(ROLE_BAN)
         
         active_ban = await self.bot.db.get_active_ban(member.id)
         has_role = role_ban and role_ban in member.roles
 
         if not active_ban and not has_role:
-            return await inter.send(
+            return await inter.edit_original_response(
                 embed=embed_builder.get_embed("error_generic", text="Этот пользователь не забанен.", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )
@@ -136,7 +138,7 @@ class Ban(commands.Cog):
             moderator_name=inter.author.display_name,
             moderator_avatar=inter.author.display_avatar.url
         )
-        await inter.send(embed=embed)
+        await inter.edit_original_response(embed=embed)
 
         log_channel = inter.guild.get_channel(LOG_PUNISH)
         if log_channel:

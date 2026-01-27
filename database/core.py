@@ -210,6 +210,15 @@ class UsersDataBase:
             )
         """)
 
+        await self.conn.execute("""
+            CREATE TABLE IF NOT EXISTS blacklist (
+                user_id INTEGER PRIMARY KEY,
+                reason TEXT,
+                admin_id INTEGER,
+                date INTEGER
+            )
+        """)
+
         await self.conn.commit()
 
     async def get_all_users_raw(self):
@@ -743,3 +752,19 @@ class UsersDataBase:
             if row:
                 return row[0] == 1
             return False
+        
+    async def add_blacklist(self, user_id: int, reason: str, admin_id: int):
+        """Добавляет пользователя в ЧС"""
+        import time
+        await self.execute(
+            "INSERT OR REPLACE INTO blacklist (user_id, reason, admin_id, date) VALUES (?, ?, ?, ?)",
+            (user_id, reason, admin_id, int(time.time()))
+        )
+
+    async def remove_blacklist(self, user_id: int):
+        await self.execute("DELETE FROM blacklist WHERE user_id = ?", (user_id,))
+
+    async def check_blacklist(self, user_id: int):
+        async with self.conn.execute("SELECT * FROM blacklist WHERE user_id = ?", (user_id,)) as cursor:
+            row = await cursor.fetchone()
+            return dict(row) if row else None

@@ -1066,5 +1066,84 @@
 		"color": "00FF00",
 		"timestamp": true,
 		"footer": { "text": "System Maintenance", "icon_url": "{author_avatar}" }
+	},
+
+	"error_blacklisted": {
+		"title": "⛔ Доступ запрещен",
+		"description": "Вы находитесь в черном списке бота.\n\n**Причина:** {reason}\n**Дата блокировки:** {date}",
+		"color": "000000",
+		"timestamp": true,
+		"footer": { "text": "Blacklist System", "icon_url": "{icon_url}" }
+	},
+	"blacklist_added": {
+		"title": "🛡️ Пользователь заблокирован",
+		"description": "Пользователь **{user}** внесен в черный список.",
+		"fields": [
+			{ "name": "🆔 ID", "value": "`{user_id}`", "inline": true },
+			{ "name": "📄 Причина", "value": "{reason}", "inline": true }
+		],
+		"color": "000000",
+		"timestamp": true,
+		"footer": { "text": "Moderator: {author}", "icon_url": "{author_avatar}" }
+	},
+	"blacklist_removed": {
+		"title": "🔓 Пользователь разблокирован",
+		"description": "Пользователь **{user}** удален из черного списка.",
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "Moderator: {author}", "icon_url": "{author_avatar}" }
+	},
+
+	"error_blacklist_not_found": {
+		"title": "❌ Ошибка",
+		"description": "Пользователь **{user}** не находится в черном списке.",
+		"color": "FF0000",
+		"timestamp": true,
+		"footer": { "text": "Blacklist System", "icon_url": "{author_avatar}" }
+	},
+	"error_blacklist_invalid_target": {
+		"title": "❌ Ошибка",
+		"description": "Нельзя заблокировать этого пользователя (себя или бота).",
+		"color": "FF0000",
+		"timestamp": true,
+		"footer": { "text": "Blacklist System", "icon_url": "{author_avatar}" }
+	},
+
+	"log_blacklist_add": {
+		"title": "🛡️ ЧС | Пользователь заблокирован",
+		"fields": [
+			{
+				"name": "👤 Пользователь",
+				"value": "{user}",
+				"inline": true
+			},
+			{
+				"name": "👮 Администратор",
+				"value": "{author}",
+				"inline": true
+			},
+			{ "name": "📄 Причина", "value": "```\n{reason}\n```", "inline": false }
+		],
+		"color": "000000",
+		"timestamp": true,
+		"footer": { "text": "Blacklist Logger", "icon_url": "{author_avatar}" }
+	},
+	"log_blacklist_remove": {
+		"title": "🔓 ЧС | Пользователь разблокирован",
+		"fields": [
+			{
+				"name": "👤 Пользователь",
+				"value": "{user}",
+				"inline": true
+			},
+			{
+				"name": "👮 Администратор",
+				"value": "{author}",
+				"inline": true
+			}
+		],
+		"color": "00FF00",
+		"timestamp": true,
+		"footer": { "text": "Blacklist Logger", "icon_url": "{author_avatar}" }
 	}
 }

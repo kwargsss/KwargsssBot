@@ -3,75 +3,75 @@
     "messages_today": 0,
     "recent_commands": [
         {
-            "user": "lyubitelmefedrona",
-            "channel": "economy",
-            "command": "/семья",
-            "time": "00:37",
-            "status": true
-        },
-        {
-            "user": "lyubitelmefedrona",
-            "channel": "economy",
-            "command": "/работа",
-            "time": "00:36",
-            "status": true
-        },
-        {
-            "user": "lyubitelmefedrona",
-            "channel": "economy",
-            "command": "/работа",
-            "time": "00:35",
-            "status": true
-        },
-        {
-            "user": "lyubitelmefedrona",
-            "channel": "economy",
-            "command": "/работа",
-            "time": "00:34",
+            "user": ".kwargsss",
+            "channel": "test",
+            "command": "/снять",
+            "time": "15:27",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/работа",
-            "time": "00:34",
+            "command": "/выдать",
+            "time": "15:27",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/обслуживание",
-            "time": "00:34",
+            "command": "/снять",
+            "time": "15:27",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/обслуживание",
-            "time": "00:34",
+            "command": "/выдать",
+            "time": "15:26",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/обслуживание",
-            "time": "00:33",
+            "command": "/снять",
+            "time": "15:26",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/обслуживание",
-            "time": "00:33",
+            "command": "/выдать",
+            "time": "15:25",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/обслуживание",
-            "time": "00:33",
+            "command": "/выдать",
+            "time": "15:22",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "test",
+            "command": "/выдать",
+            "time": "15:21",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "chat",
+            "command": "/снять",
+            "time": "15:19",
+            "status": true
+        },
+        {
+            "user": ".kwargsss",
+            "channel": "chat",
+            "command": "/снять",
+            "time": "15:18",
             "status": true
         }
     ],
-    "commands_today": 16
+    "commands_today": 44
 }
