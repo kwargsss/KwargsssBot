@@ -22,15 +22,13 @@ class InviteView(disnake.ui.View):
     async def confirm(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         if inter.author.id != self.tenant.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
 
         house = await self.bot.db.get_house(self.owner.id)
         if not house:
              return await inter.edit_original_response(
-                 embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                 ephemeral=True
+                 embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
              )
              
         await self.bot.db.add_tenant(self.tenant.id, self.owner.id, self.rent)
@@ -51,8 +49,7 @@ class InviteView(disnake.ui.View):
     async def cancel(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         if inter.author.id != self.tenant.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
             
         self.value = False
@@ -73,8 +70,7 @@ class RoomControlView(disnake.ui.View):
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.owner_id:
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
             return False
         return True
@@ -91,8 +87,7 @@ class RoomControlView(disnake.ui.View):
             new_name = modal_inter.text_values["name"]
             await self.channel.edit(name=new_name)
             await modal_inter.response.send_message(
-                embed=disnake.Embed(description=f"✅ Комната переименована в **{new_name}**", color=disnake.Color.green()),
-                ephemeral=True
+                embed=disnake.Embed(description=f"✅ Комната переименована в **{new_name}**", color=disnake.Color.green())
             )
         except asyncio.TimeoutError:
             pass
@@ -109,8 +104,7 @@ class RoomControlView(disnake.ui.View):
         
         await inter.response.edit_message(view=self)
         await inter.followup.send(
-            embed=disnake.Embed(description=f"🚪 Комната {status} для всех.", color=disnake.Color.green()),
-            ephemeral=True
+            embed=disnake.Embed(description=f"🚪 Комната {status} для всех.", color=disnake.Color.green())
         )
 
     @disnake.ui.button(label="Кикнуть", style=disnake.ButtonStyle.gray, emoji="👢")
@@ -118,15 +112,13 @@ class RoomControlView(disnake.ui.View):
         members = [m for m in self.channel.members if m.id != self.owner_id]
         if not members:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="👀 В комнате никого нет.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="👀 В комнате никого нет.", author_avatar=inter.author.display_avatar.url)
             )
         
         target = members[0]
         await target.move_to(None)
         await inter.edit_original_response(
-            embed=disnake.Embed(description=f"👢 {target.mention} был выгнан.", color=disnake.Color.green()),
-            ephemeral=True
+            embed=disnake.Embed(description=f"👢 {target.mention} был выгнан.", color=disnake.Color.green())
         )
 
 class SellHouseView(disnake.ui.View):
@@ -141,8 +133,7 @@ class SellHouseView(disnake.ui.View):
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.author.id:
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
             return False
         return True
@@ -212,20 +203,17 @@ class Estate(commands.Cog):
         await inter.response.defer()
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url)
             )
         if member.bot:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url)
             )
 
         house = await self.bot.db.get_house(inter.author.id)
         if not house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
 
         house_conf = ECO_CFG.get("estate", {}).get("houses", {}).get(house['type'])
@@ -239,13 +227,12 @@ class Estate(commands.Cog):
                 author_name=inter.author.display_name,
                 author_avatar=inter.author.display_avatar.url
             )
-            return await inter.edit_original_response(embed=embed, ephemeral=True)
+            return await inter.edit_original_response(embed=embed)
 
         target_house, status = await self.bot.db.get_living_space(member.id)
         if target_house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"❌ {member.display_name} уже имеет жилье!", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"❌ {member.display_name} уже имеет жилье!", author_avatar=inter.author.display_avatar.url)
             )
 
         embed_sent = embed_builder.get_embed(
@@ -256,7 +243,7 @@ class Estate(commands.Cog):
             author_avatar=inter.author.display_avatar.url
         )
         
-        await inter.edit_original_response(embed=embed_sent, ephemeral=True)
+        await inter.edit_original_response(embed=embed_sent)
 
         embed_invite = embed_builder.get_embed(
             "house_invite_received", 
@@ -275,15 +262,13 @@ class Estate(commands.Cog):
         house = await self.bot.db.get_house(inter.author.id)
         if not house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
 
         tenant_info = await self.bot.db.get_tenant_info(member.id)
         if not tenant_info or tenant_info['owner_id'] != inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Этот пользователь не живет у вас.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Этот пользователь не живет у вас.", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.remove_tenant(member.id)
@@ -295,8 +280,7 @@ class Estate(commands.Cog):
         tenant_info = await self.bot.db.get_tenant_info(inter.author.id)
         if not tenant_info:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Вы нигде не подселены.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Вы нигде не подселены.", author_avatar=inter.author.display_avatar.url)
             )
 
         owner = await self.bot.fetch_user(tenant_info['owner_id'])
@@ -317,15 +301,13 @@ class Estate(commands.Cog):
         house = await self.bot.db.get_house(inter.author.id)
         if not house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
 
         tenants = await self.bot.db.get_house_tenants(inter.author.id)
         if not tenants:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="📂 У вас никто не живет.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="📂 У вас никто не живет.", author_avatar=inter.author.display_avatar.url)
             )
 
         desc = ""
@@ -359,13 +341,11 @@ class Estate(commands.Cog):
                 is_owner = False
                 if not house:
                      return await inter.edit_original_response(
-                         embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                         ephemeral=True
+                         embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
                      )
             else:
                 return await inter.edit_original_response(
-                    embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                    ephemeral=True
+                    embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
                 )
 
         house_type = house['type']
@@ -374,8 +354,7 @@ class Estate(commands.Cog):
         
         if not conf:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Конфигурация дома не найдена.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Конфигурация дома не найдена.", author_avatar=inter.author.display_avatar.url)
             )
 
         owner_id = house['user_id']
@@ -444,8 +423,7 @@ class Estate(commands.Cog):
         await inter.response.defer()
         if house_name == "⬅️ Сначала выберите тип жилья!":
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Вы не выбрали дом.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Вы не выбрали дом.", author_avatar=inter.author.display_avatar.url)
             )
 
         houses = self.estate_cfg.get("houses", {})
@@ -459,8 +437,7 @@ class Estate(commands.Cog):
         
         if not selected_key:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Дом не найден или не соответствует выбранному типу.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Дом не найден или не соответствует выбранному типу.", author_avatar=inter.author.display_avatar.url)
             )
 
         conf = houses[selected_key]
@@ -474,15 +451,13 @@ class Estate(commands.Cog):
         user_db = await self.bot.db.get_user(inter.author)
         if user_db["money"] < price:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=user_db["money"], needed=price, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=user_db["money"], needed=price, author_avatar=inter.author.display_avatar.url)
             )
             
         current_house = await self.bot.db.get_house(inter.author.id)
         if current_house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="У вас уже есть жильё! Сначала продайте его.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="У вас уже есть жильё! Сначала продайте его.", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_money(inter.author, -price, 0)
@@ -503,8 +478,7 @@ class Estate(commands.Cog):
         house = await self.bot.db.get_house(inter.author.id)
         if not house:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
         
         house_type_key = house["type"]

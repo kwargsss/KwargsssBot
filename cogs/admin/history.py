@@ -28,9 +28,11 @@ class HistorySelect(disnake.ui.StringSelect):
 
     async def callback(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.author.id:
-            return await inter.edit_original_response(
+            # Для чужих кнопок используем send с ephemeral=True (это не крашит, так как это send, а не edit)
+            # Если вы хотите, чтобы ошибки кнопок видели все, уберите ephemeral=True
+            return await inter.response.send_message(
                 embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                ephemeral=True 
             )
 
         selected_type = self.values[0]

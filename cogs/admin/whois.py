@@ -320,7 +320,7 @@ class WhoisView(disnake.ui.View):
 
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.author.id:
-            await inter.edit_original_response(
+            await inter.response.send_message(
                 embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
                 ephemeral=True
             )

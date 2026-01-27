@@ -40,14 +40,12 @@ class Crime(commands.Cog):
 
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url)
             )
         
         if member.bot:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url)
             )
 
         user_data = await self.bot.db.get_user(inter.author)
@@ -55,8 +53,7 @@ class Crime(commands.Cog):
 
         if not target_data or target_data['money'] < 50:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"У {member.display_name} слишком мало налички.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"У {member.display_name} слишком мало налички.", author_avatar=inter.author.display_avatar.url)
             )
 
         target_businesses = await self.bot.db.get_user_businesses(member.id)

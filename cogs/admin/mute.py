@@ -29,45 +29,38 @@ class Mute(commands.Cog):
         await inter.response.defer()
         if member.id == self.bot.user.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url)
             )
         
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url)
             )
 
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url)
             )
 
         seconds = parse_time(time_str)
         if seconds == 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url)
             )
         if seconds < 5:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_invalid_time", author_avatar=inter.author.display_avatar.url)
             )
 
         role_mute = inter.guild.get_role(ROLE_MUTE)
         if not role_mute:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Роль Mute не настроена в конфиге.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Роль Mute не настроена в конфиге.", author_avatar=inter.author.display_avatar.url)
             )
 
         if role_mute in member.roles:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Пользователь уже в мьюте.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Пользователь уже в мьюте.", author_avatar=inter.author.display_avatar.url)
             )
 
         await member.add_roles(role_mute, reason=f"Замьютил {inter.author}: {reason}")
@@ -121,8 +114,7 @@ class Mute(commands.Cog):
 
         if not active_mute and not has_role:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Этот Пользователь не в мьюте.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Этот Пользователь не в мьюте.", author_avatar=inter.author.display_avatar.url)
             )
 
         if has_role:

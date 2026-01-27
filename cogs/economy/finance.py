@@ -122,20 +122,17 @@ class FinanceSystem(commands.Cog):
 
         if amount == 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="ℹ️ Чтобы открыть вклад, укажите сумму и срок: `/финансы вклад сумма:1000 срок:7`", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="ℹ️ Чтобы открыть вклад, укажите сумму и срок: `/финансы вклад сумма:1000 срок:7`", author_avatar=inter.author.display_avatar.url)
             )
 
         if amount < 100:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="❌ Минимальная сумма вклада — 100 монет.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="❌ Минимальная сумма вклада — 100 монет.", author_avatar=inter.author.display_avatar.url)
             )
 
         if user_db['money'] < amount:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=user_db['money'], needed=amount, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=user_db['money'], needed=amount, author_avatar=inter.author.display_avatar.url)
             )
 
         percent = self.config.get("deposits", {}).get(days, 5)
@@ -212,8 +209,7 @@ class DepositManageView(disnake.ui.View):
     async def close_early(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         if inter.author.id != self.user_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_money(inter.author, 0, self.return_amount)
@@ -250,26 +246,22 @@ class CreditTakeModal(disnake.ui.Modal):
             amount = int(inter.text_values["amount"])
         except ValueError:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Введите корректное число.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Введите корректное число.", author_avatar=inter.author.display_avatar.url)
             )
 
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
         if amount > self.max_amount:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"Ваш лимит превышен! Максимум: {self.max_amount}", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"Ваш лимит превышен! Максимум: {self.max_amount}", author_avatar=inter.author.display_avatar.url)
             )
 
         rating = await self.bot.db.get_credit_rating(inter.author.id)
         if rating < self.cfg['min_rating_to_take']:
              return await inter.edit_original_response(
-                 embed=embed_builder.get_embed("error_generic", text="Ваш кредитный рейтинг слишком низок.", author_avatar=inter.author.display_avatar.url),
-                 ephemeral=True
+                 embed=embed_builder.get_embed("error_generic", text="Ваш кредитный рейтинг слишком низок.", author_avatar=inter.author.display_avatar.url)
              )
 
         total_to_pay = int(amount * (1 + self.cfg['percent'] / 100))
@@ -280,8 +272,7 @@ class CreditTakeModal(disnake.ui.Modal):
         embed, view = await self.cog.render_credit_menu(inter.author)
         await inter.response.edit_message(embed=embed, view=view)
         await inter.followup.send(
-            embed=disnake.Embed(description=f"✅ Вы взяли кредит: **{format_money(amount)}**", color=disnake.Color.green()),
-            ephemeral=True
+            embed=disnake.Embed(description=f"✅ Вы взяли кредит: **{format_money(amount)}**", color=disnake.Color.green())
         )
 
 
@@ -305,22 +296,19 @@ class CreditRepayModal(disnake.ui.Modal):
             amount = int(inter.text_values["amount"])
         except:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Ошибка ввода.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Ошибка ввода.", author_avatar=inter.author.display_avatar.url)
             )
 
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
         if amount > self.left: amount = self.left
 
         bank_money = await self.bot.db.get_balance(inter.author, "bank")
         if bank_money < amount:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=bank_money, needed=amount, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=bank_money, needed=amount, author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_money(inter.author, 0, -amount)
@@ -335,8 +323,7 @@ class CreditRepayModal(disnake.ui.Modal):
         embed, view = await self.cog.render_credit_menu(inter.author)
         await inter.response.edit_message(embed=embed, view=view)
         await inter.followup.send(
-            embed=disnake.Embed(description=msg, color=disnake.Color.green()),
-            ephemeral=True
+            embed=disnake.Embed(description=msg, color=disnake.Color.green())
         )
 
 
@@ -353,8 +340,7 @@ class CreditTakeView(disnake.ui.View):
     async def take_loan(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         if inter.author.id != self.user_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
         await inter.response.send_modal(CreditTakeModal(self.bot, self.cog, self.max_loan, self.cfg))
 
@@ -371,8 +357,7 @@ class CreditRepayView(disnake.ui.View):
     async def repay(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
         if inter.author.id != self.user_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
         await inter.response.send_modal(CreditRepayModal(self.bot, self.cog, self.loan_id, self.left))
 

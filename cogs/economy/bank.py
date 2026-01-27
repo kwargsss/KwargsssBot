@@ -27,8 +27,7 @@ class BankSystem(commands.Cog):
         await inter.response.defer()
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
 
         user_data = await self.bot.db.get_user(inter.author)
@@ -39,8 +38,7 @@ class BankSystem(commands.Cog):
         cash = user_data['money']
         if cash < amount:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=cash, needed=amount, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=cash, needed=amount, author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_money(inter.author, -amount, amount)
@@ -66,8 +64,7 @@ class BankSystem(commands.Cog):
         await inter.response.defer()
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
 
         user_data = await self.bot.db.get_user(inter.author)
@@ -78,8 +75,7 @@ class BankSystem(commands.Cog):
         bank_balance = user_data['bank']
         if bank_balance < amount:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=bank_balance, needed=amount, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=bank_balance, needed=amount, author_avatar=inter.author.display_avatar.url)
             )
 
         fee, received = commission_manager.calculate(amount, "bank_withdraw")

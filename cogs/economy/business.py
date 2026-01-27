@@ -130,8 +130,7 @@ class BizSellSelect(disnake.ui.StringSelect):
         
         if not biz_data:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
             
         info = CFG.types.get(biz_data['type'])
@@ -177,14 +176,12 @@ class SuppliesModal(disnake.ui.Modal):
             amount = int(inter.text_values["amount"])
         except ValueError:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Введите корректное число.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Введите корректное число.", author_avatar=inter.author.display_avatar.url)
             )
 
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
 
         cost = amount * self.current_price
@@ -192,8 +189,7 @@ class SuppliesModal(disnake.ui.Modal):
 
         if user_money < cost:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=user_money, needed=cost, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=user_money, needed=cost, author_avatar=inter.author.display_avatar.url)
             )
 
         biz_type_info = CFG.types[self.biz_data['type']]
@@ -203,8 +199,7 @@ class SuppliesModal(disnake.ui.Modal):
         if self.biz_data['supplies'] + amount > max_storage:
              free = max_storage - self.biz_data['supplies']
              return await inter.edit_original_response(
-                 embed=embed_builder.get_embed("error_generic", text=f"Склад переполнен! Свободно мест: {free}", author_avatar=inter.author.display_avatar.url),
-                 ephemeral=True
+                 embed=embed_builder.get_embed("error_generic", text=f"Склад переполнен! Свободно мест: {free}", author_avatar=inter.author.display_avatar.url)
              )
 
         await self.bot.db.update_money(inter.author, -cost, 0)
@@ -253,8 +248,7 @@ class UpgradeView(disnake.ui.View):
             money = await self.bot.db.get_balance(inter.author, "money")
             if money < cost:
                 return await inter.edit_original_response(
-                    embed=embed_builder.get_embed("error_no_money_details", balance=money, needed=cost, author_avatar=inter.author.display_avatar.url),
-                    ephemeral=True
+                    embed=embed_builder.get_embed("error_no_money_details", balance=money, needed=cost, author_avatar=inter.author.display_avatar.url)
                 )
             
             await self.bot.db.update_money(inter.author, -cost, 0)
@@ -283,8 +277,7 @@ class BizSellConfirmView(disnake.ui.View):
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.owner_id:
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
             return False
         return True
@@ -294,8 +287,7 @@ class BizSellConfirmView(disnake.ui.View):
         exists = await self.bot.db.get_business_by_id(self.biz_data['id'])
         if not exists:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.delete_business(self.biz_data['id'])
@@ -340,8 +332,7 @@ class BizDashboardView(disnake.ui.View):
     async def interaction_check(self, inter: disnake.MessageInteraction):
         if inter.author.id != self.owner_id:
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_interaction_owner", author_avatar=inter.author.display_avatar.url)
             )
             return False
         return True
@@ -365,8 +356,7 @@ class BizDashboardView(disnake.ui.View):
         
         if balance <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="В кассе пусто.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="В кассе пусто.", author_avatar=inter.author.display_avatar.url)
             )
 
         offshore_lvl = self.biz_data.get('offshore_lvl', 0)
@@ -401,7 +391,7 @@ class BizDashboardView(disnake.ui.View):
             msg += "\n🏝️ **Налог не уплачен** (Оффшоры 100%)"
             
         success_embed = disnake.Embed(description=msg, color=disnake.Color.green())
-        await inter.edit_original_response(embed=success_embed, ephemeral=True)
+        await inter.edit_original_response(embed=success_embed)
 
     @disnake.ui.button(label="🛠️ Улучшения", style=disnake.ButtonStyle.secondary, row=0)
     async def upgrades(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
@@ -562,8 +552,7 @@ class Business(commands.Cog):
         await inter.response.defer()
         if biz_name == "⬅️ Сначала выберите категорию бизнеса!":
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Вы не выбрали бизнес.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Вы не выбрали бизнес.", author_avatar=inter.author.display_avatar.url)
             )
 
         selected_key = None
@@ -575,16 +564,14 @@ class Business(commands.Cog):
         
         if not selected_key:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_not_found", author_avatar=inter.author.display_avatar.url)
             )
 
         user_businesses = await self.bot.db.get_user_businesses(inter.author.id)
         for biz in user_businesses:
             if biz['type'] == selected_key:
                 return await inter.edit_original_response(
-                    embed=embed_builder.get_embed("error_generic", text=f"У вас уже есть **{CFG.types[selected_key]['name']}**!", author_avatar=inter.author.display_avatar.url),
-                    ephemeral=True
+                    embed=embed_builder.get_embed("error_generic", text=f"У вас уже есть **{CFG.types[selected_key]['name']}**!", author_avatar=inter.author.display_avatar.url)
                 )
 
         info = CFG.types[selected_key]
@@ -599,8 +586,7 @@ class Business(commands.Cog):
         user_db = await self.bot.db.get_user(inter.author)
         if user_db['money'] < cost:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=user_db['money'], needed=cost, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=user_db['money'], needed=cost, author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_money(inter.author, -cost, 0)
@@ -631,7 +617,7 @@ class Business(commands.Cog):
         if len(businesses) == 1:
             biz_data = businesses[0]
             info = CFG.types.get(biz_data['type'])
-            if not info: return await inter.edit_original_response(embed=disnake.Embed(description="Ошибка конфигурации бизнеса", color=disnake.Color.red()), ephemeral=True)
+            if not info: return await inter.edit_original_response(embed=disnake.Embed(description="Ошибка конфигурации бизнеса", color=disnake.Color.red()))
             
             sell_price = int(info['cost'] * SELL_RATIO)
             

@@ -30,7 +30,7 @@ class Blacklist(commands.Cog):
                 "error_blacklist_invalid_target",
                 author_avatar=inter.author.display_avatar.url
             )
-            return await inter.edit_original_response(embed=embed )
+            return await inter.edit_original_response(embed=embed)
 
         await self.bot.db.add_blacklist(user.id, reason, inter.author.id)
 
@@ -70,7 +70,7 @@ class Blacklist(commands.Cog):
                 user=user.name,
                 author_avatar=inter.author.display_avatar.url
             )
-            return await inter.edit_original_response(embed=embed )
+            return await inter.edit_original_response(embed=embed)
 
         await self.bot.db.remove_blacklist(user.id)
 

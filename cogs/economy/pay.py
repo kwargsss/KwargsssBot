@@ -29,20 +29,17 @@ class PaySystem(commands.Cog):
 
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url)
             )
 
         if member.bot:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url)
             )
 
         if amount <= 0:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_zero_amount", author_avatar=inter.author.display_avatar.url)
             )
 
         sender_data = await self.bot.db.get_user(inter.author)
@@ -64,8 +61,7 @@ class PaySystem(commands.Cog):
                     balance=f"{current_balance} ({account_name})", 
                     needed=amount,
                     author_avatar=inter.author.display_avatar.url
-                ), 
-                ephemeral=True
+                )
             )
 
         fee, net_amount = commission_manager.calculate(amount, "pay")

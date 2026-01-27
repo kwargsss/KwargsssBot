@@ -25,19 +25,16 @@ class WarnSystem(commands.Cog):
         await inter.response.defer()
         if member.id == self.bot.user.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_bot_action", author_avatar=inter.author.display_avatar.url)
             )
         if member.id == inter.author.id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_self_action", author_avatar=inter.author.display_avatar.url)
             )
         
         if member.top_role >= inter.author.top_role and inter.author.id != inter.guild.owner_id:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_hierarchy", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.add_punishment(member.id, "warn", 0, reason=reason, moderator_id=inter.author.id)
@@ -80,8 +77,7 @@ class WarnSystem(commands.Cog):
         
         if not removed:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"У пользователя {member.mention} нет активных предупреждений.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"У пользователя {member.mention} нет активных предупреждений.", author_avatar=inter.author.display_avatar.url)
             )
 
         count = await self.bot.db.get_warns_count(member.id)

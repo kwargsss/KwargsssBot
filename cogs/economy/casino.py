@@ -154,22 +154,19 @@ class Casino(commands.Cog):
         
         if amount < self.cfg.get("min_bet", 10):
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"Минимальная ставка: {format_money(self.cfg.get('min_bet', 10))}", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"Минимальная ставка: {format_money(self.cfg.get('min_bet', 10))}", author_avatar=inter.author.display_avatar.url)
             )
             return False
             
         if amount > self.cfg.get("max_bet", 1000000):
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text=f"Максимальная ставка: {format_money(self.cfg.get('max_bet', 1000000))}", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text=f"Максимальная ставка: {format_money(self.cfg.get('max_bet', 1000000))}", author_avatar=inter.author.display_avatar.url)
             )
             return False
 
         if money < amount:
             await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_no_money_details", balance=format_money(money), needed=amount, author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_no_money_details", balance=format_money(money), needed=amount, author_avatar=inter.author.display_avatar.url)
             )
             return False
             

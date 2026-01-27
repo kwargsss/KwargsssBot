@@ -21,8 +21,7 @@ class Bio(commands.Cog):
         await inter.response.defer()
         if len(text) > 200:
             return await inter.edit_original_response(
-                embed=embed_builder.get_embed("error_generic", text="Длина биографии не может превышать 200 символов.", author_avatar=inter.author.display_avatar.url),
-                ephemeral=True
+                embed=embed_builder.get_embed("error_generic", text="Длина биографии не может превышать 200 символов.", author_avatar=inter.author.display_avatar.url)
             )
 
         await self.bot.db.update_bio(inter.author.id, text)
