@@ -61,7 +61,7 @@ class StatsHandler:
             "user": user,
             "channel": channel,
             "command": command_name,
-            "time": datetime.datetime.now().strftime("%H:%M"),
+            "time": datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
             "status": success 
         }
         

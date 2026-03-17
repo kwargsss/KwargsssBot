@@ -18,10 +18,6 @@ from utils.stats_manager import stats
 from utils.logger import log
 
 
-
-
-
-
 class WSPacket(BaseModel):
     action: str
     data: Dict[str, Any]
@@ -79,6 +75,8 @@ class DashboardClient:
         self.bot = bot
         self.running = False
         self.ws = None
+        self.request_timestamps = []
+        self.MAX_REQUESTS_PER_MINUTE = 60
 
     def _resolve_mentions(self, text, guild):
         if not text: return ""
@@ -112,12 +110,19 @@ class DashboardClient:
 
         return text
 
+    def _is_rate_limited(self) -> bool:
+        now = time.time()
+        self.request_timestamps = [t for t in self.request_timestamps if now - t < 60]
+        
+        if len(self.request_timestamps) >= self.MAX_REQUESTS_PER_MINUTE:
+            return True
+            
+        self.request_timestamps.append(now)
+        return False 
+
     async def start(self):
         self.running = True
-        await self.bot.wait_until_ready()
-        
-        
-        
+        await self.bot.wait_until_ready()  
         
         while self.running and not self.bot.is_closed():
             try:
@@ -211,6 +216,11 @@ class DashboardClient:
             await asyncio.sleep(5)
 
     async def _handle_message(self, ws, raw_data, log_func):
+        if self._is_rate_limited():
+            log.warning("⚠️ Сработал Rate-Limit для WebSocket! Игнорируем запрос.")
+            await log_func("error", "Rate limit exceeded. Wait a minute.")
+            return
+        
         try:
             packet = WSPacket.model_validate_json(raw_data)
             action = packet.action
@@ -222,12 +232,23 @@ class DashboardClient:
             elif action == "send_message":
                 payload = SendMessagePayload(**packet.data)
                 channel = self.bot.get_channel(payload.channel_id)
-                if channel: await channel.send(payload.text)
+                if channel and channel.guild.id == config.TARGET_GUILD_ID: 
+                    await channel.send(payload.text)
+                else:
+                    log.warning(f"⚠️ Попытка отправить сообщение в неавторизованный канал: {payload.channel_id}")
 
             elif action == "send_embed":
                 payload = SendEmbedPayload(**packet.data)
-                if payload.type == "v2": await self._send_v2_components(payload, log_func)
-                else: await self._send_embed(payload, log_func)
+                channel = self.bot.get_channel(payload.channel_id)
+
+                if not channel or channel.guild.id != config.TARGET_GUILD_ID:
+                    log.warning(f"⚠️ Попытка отправить Embed в неавторизованный канал: {payload.channel_id}")
+                    return
+                
+                if payload.type == "v2": 
+                    await self._send_v2_components(payload, log_func)
+                else: 
+                    await self._send_embed(payload, log_func)
 
             elif action == "admin_reply":
                 await self._handle_admin_reply(packet.data)
@@ -246,7 +267,6 @@ class DashboardClient:
 
         except Exception as e:
             await log_func("error", f"Handler Error: {e}")
-            
             log.error(f"📨 Ошибка обработки входящего WS сообщения: {e}")
 
     
@@ -408,23 +428,46 @@ class DashboardClient:
     
     async def _download_file(self, url, default_name):  
         if not self._is_safe_url(url): return None, None
+        
+        MAX_FILE_SIZE = 10 * 1024 * 1024
+        
         try:
             parsed_url = urlparse(url)
             clean_path = parsed_url.path
             headers = {"User-Agent": "Bot/1.0"}
+            
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, headers=headers) as resp:
                     if resp.status == 200:
-                        data = await resp.read()
+                        content_length = resp.headers.get('Content-Length')
+                        if content_length and int(content_length) > MAX_FILE_SIZE:
+                            log.warning(f"⚠️ Файл {url} слишком большой ({content_length} байт). Отмена.")
+                            return None, None
+
+                        file_data = bytearray()
+                        async for chunk in resp.content.iter_chunked(8192):
+                            file_data.extend(chunk)
+                            if len(file_data) > MAX_FILE_SIZE:
+                                log.warning(f"⚠️ Файл {url} превысил лимит в 10 МБ во время загрузки. Отмена.")
+                                return None, None
+
                         content_type = resp.headers.get('Content-Type', '')
                         ext = mimetypes.guess_extension(content_type)
-                        if not ext: ext = "." + clean_path.split("/")[-1].split(".")[-1] if "." in clean_path else ".png"
+                        if not ext: 
+                            ext = "." + clean_path.split("/")[-1].split(".")[-1] if "." in clean_path else ".png"
+                            
                         base_name = default_name.split('.')[0]
                         final_name = f"{base_name}{ext}"
-                        f = io.BytesIO(data); f.seek(0)
+                        
+                        f = io.BytesIO(file_data)
+                        f.seek(0)
                         return disnake.File(f, filename=final_name), final_name
-                    else: return None, None
-        except: return None, None
+                    else: 
+                        return None, None
+                    
+        except Exception as e: 
+            log.error(f"Ошибка загрузки файла {url}: {e}")
+            return None, None
 
     def _is_safe_url(self, url: str) -> bool:
         try:

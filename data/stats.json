@@ -1,77 +1,21 @@
 {
-    "date": "2026-01-27",
-    "messages_today": 0,
+    "date": "2026-03-17",
+    "messages_today": 16,
+    "commands_today": 0,
     "recent_commands": [
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/мут",
-            "time": "16:05",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/снять",
-            "time": "16:04",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/выдать",
-            "time": "16:04",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/снять",
-            "time": "16:04",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/снять",
-            "time": "16:02",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/выдать",
-            "time": "16:00",
-            "status": true
-        },
         {
             "user": ".kwargsss",
             "channel": "embed-debuger",
             "command": "/debug_embeds",
-            "time": "15:56",
+            "time": "15.02.2026 21:08",
             "status": true
         },
         {
             "user": ".kwargsss",
             "channel": "test",
-            "command": "/экономика",
-            "time": "15:54",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/reload",
-            "time": "15:54",
-            "status": true
-        },
-        {
-            "user": ".kwargsss",
-            "channel": "test",
-            "command": "/reload",
-            "time": "15:54",
+            "command": "/аюзер",
+            "time": "15.02.2026 21:08",
             "status": true
         }
-    ],
-    "commands_today": 56
+    ]
 }

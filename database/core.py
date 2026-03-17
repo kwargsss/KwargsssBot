@@ -4,6 +4,7 @@ import time
 import datetime
 
 from config import *
+from utils.logger import log
 
 
 class UsersDataBase:
@@ -220,6 +221,25 @@ class UsersDataBase:
         """)
 
         await self.conn.commit()
+
+    async def secure_transfer(self, sender_id: int, receiver_id: int, amount: int):
+        try:
+            await self.conn.execute("BEGIN")
+            
+            await self.conn.execute("UPDATE users SET bank = bank - ? WHERE id = ?", (amount, sender_id))
+            await self.conn.execute("UPDATE users SET bank = bank + ? WHERE id = ?", (amount, receiver_id))
+            
+            await self.conn.execute(
+                "INSERT INTO transactions (sender_id, target_id, amount, source_type, target_type, created_at) VALUES (?, ?, ?, 'transfer', 'transfer', ?)",
+                (sender_id, receiver_id, amount, time.time())
+            )
+
+            await self.conn.commit()
+            return True
+        except Exception as e:
+            await self.conn.rollback()
+            log.error(f"⚠️ Ошибка транзакции БД при переводе: {e}")
+            return False
 
     async def get_all_users_raw(self):
         async with self.conn.execute('SELECT * FROM users') as cursor:
@@ -498,14 +518,22 @@ class UsersDataBase:
 
     async def add_love_xp(self, marriage_id: int, xp: int):
         now = time.time()
-        await self.execute(
-            "UPDATE marriages SET love_xp = love_xp + ?, last_love = ? WHERE id = ?", 
-            (xp, now, marriage_id)
-        )
-        await self.execute(
-            "UPDATE marriages SET level = 1 + (love_xp / 100) WHERE id = ?", 
-            (marriage_id,)
-        )
+        try:
+            await self.conn.execute("BEGIN")
+            await self.conn.execute(
+                "UPDATE marriages SET love_xp = love_xp + ?, last_love = ? WHERE id = ?", 
+                (xp, now, marriage_id)
+            )
+            await self.conn.execute(
+                "UPDATE marriages SET level = 1 + (love_xp / 100) WHERE id = ?", 
+                (marriage_id,)
+            )
+            await self.conn.commit()
+            return True
+        except Exception as e:
+            await self.conn.rollback()
+            log.error(f"⚠️ Ошибка транзакции при начислении love_xp: {e}")
+            return False
 
     async def jail_user(self, user_id: int, duration: int): 
         release_time = time.time() + duration
@@ -555,6 +583,10 @@ class UsersDataBase:
         )
     
     async def upgrade_biz(self, biz_id: int, upgrade_type: str):
+        allowed_upgrades = ["marketing_lvl", "logistics_lvl", "security_lvl", "automation_lvl", "offshore_lvl"]
+        if upgrade_type not in allowed_upgrades:
+            raise ValueError(f"⚠️ Попытка SQL-инъекции. Недопустимый тип апгрейда: {upgrade_type}")
+            
         query = f"UPDATE businesses SET {upgrade_type} = {upgrade_type} + 1 WHERE id = ?"
         await self.execute(query, (biz_id,))
 
@@ -715,6 +747,10 @@ class UsersDataBase:
         )
     
     async def upgrade_family_biz(self, biz_id: int, upgrade_type: str):
+        allowed_upgrades = ["marketing_lvl", "logistics_lvl", "security_lvl", "automation_lvl", "offshore_lvl"]
+        if upgrade_type not in allowed_upgrades:
+            raise ValueError(f"⚠️ Попытка SQL-инъекции. Недопустимый тип апгрейда: {upgrade_type}")
+            
         await self.execute(f"UPDATE marriages_businesses SET {upgrade_type} = {upgrade_type} + 1 WHERE id = ?", (biz_id,))
 
     async def delete_family_business(self, biz_id: int):
@@ -754,7 +790,6 @@ class UsersDataBase:
             return False
         
     async def add_blacklist(self, user_id: int, reason: str, admin_id: int):
-        """Добавляет пользователя в ЧС"""
         import time
         await self.execute(
             "INSERT OR REPLACE INTO blacklist (user_id, reason, admin_id, date) VALUES (?, ?, ?, ?)",
